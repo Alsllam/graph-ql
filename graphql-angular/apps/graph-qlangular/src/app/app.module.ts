@@ -1,20 +1,23 @@
-import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { RouterModule } from "@angular/router";
-import { AppComponent } from "./app.component";
-import { appRoutes } from "./app.routes";
-import { NxWelcomeComponent } from "./nx-welcome.component";
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
+import { appRoutes } from './app.routes';
+import { NxWelcomeComponent } from './nx-welcome.component';
 import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { InMemoryCache } from '@apollo/client/core';
+import { QueriesComponent } from './queries/queries.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
+  declarations: [AppComponent, NxWelcomeComponent, QueriesComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes, { initialNavigation: "enabledBlocking" }),
+    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     HttpClientModule,
-    ApolloModule
+    ApolloModule,
+    NgxDatatableModule 
   ],
   providers: [
     {

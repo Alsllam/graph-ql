@@ -19,7 +19,7 @@
           "apps/graph-qlangular/src/favicon.ico",
           "apps/graph-qlangular/src/assets"
         ],
-        "styles": ["apps/graph-qlangular/src/styles.scss"],
+        "styles": ["node_modules/@swimlane/ngx-datatable/themes/material.css","apps/graph-qlangular/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
