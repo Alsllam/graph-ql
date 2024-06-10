@@ -1,0 +1,18 @@
+<button (click)="getData()">Get Data</button>
+<div class="card">
+        <ngx-datatable
+                class="material"
+                [rows]="rows"
+                [columns]="[{ name: 'Name' }, { name: 'Gender' }, { name: 'Company' }]"
+                [columnMode]="ColumnMode?.force"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                rowHeight="auto"
+                [externalPaging]="true"
+                [count]="page?.totalElements"
+                [offset]="page?.pageNumber"
+                [limit]="page?.size"
+                (page)="setPage($event)"
+        >
+        </ngx-datatable>
+</div>
