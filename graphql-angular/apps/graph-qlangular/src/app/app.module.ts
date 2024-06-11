@@ -10,14 +10,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { InMemoryCache } from '@apollo/client/core';
 import { QueriesComponent } from './queries/queries.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { FeedDetailsComponent } from './feed-details/feed-details.component';
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent, QueriesComponent],
+  declarations: [
+    AppComponent,
+    NxWelcomeComponent,
+    QueriesComponent,
+    FeedDetailsComponent,
+  ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     HttpClientModule,
     ApolloModule,
-    NgxDatatableModule 
+    NgxDatatableModule,
   ],
   providers: [
     {
