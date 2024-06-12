@@ -1,5 +1,8 @@
-<div class="card" *ngIf="details">
-    <div class="card-body">
+<div class="card" >
+    <div class="card-body" *ngIf="details">
         {{details.body}}
+    </div>
+    <div class="card-body" *ngIf="!details">
+        there's no comments to display
     </div>
 </div>
