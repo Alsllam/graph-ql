@@ -28,3 +28,9 @@ export const CREATE_Comment = gql`
     }
   }
 `;
+
+export const FEED_SUBSCRIBE = gql`
+  subscription {
+    countdown(from: 100)
+  }
+`;
