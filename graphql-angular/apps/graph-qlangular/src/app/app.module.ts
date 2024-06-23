@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     QueriesComponent,
     CreateUpdateFeedComponent,
     AddCommentComponent,
+    FeedDetailsComponent
   ],
   imports: [
     BrowserModule,
