@@ -5,6 +5,7 @@ import { ColumnMode } from '@swimlane/ngx-datatable/public-api';
 import { Apollo, gql } from 'apollo-angular';
 import { Subscription } from 'rxjs';
 import { GET_Feeds } from '../gql/feeds-query';
+import { FEED_SUBSCRIBE } from '../gql/feeds-mutations';
 @Component({
   selector: 'graphql-angular-queries',
   templateUrl: './queries.component.html',
@@ -17,6 +18,15 @@ export class QueriesComponent implements OnInit, OnDestroy {
   page: any;
   constructor(private readonly apollo: Apollo, private router: Router) {}
   ngOnInit(): void {
+    this.apollo
+      .subscribe({
+        query: FEED_SUBSCRIBE,
+      })
+      .subscribe((result) => {
+        if (result) {
+          console.log('New data:', result);
+        }
+      });
     this.getData();
   }
   public getData() {
