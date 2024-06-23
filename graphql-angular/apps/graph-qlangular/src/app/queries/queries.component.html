@@ -17,10 +17,15 @@
                 <ngx-datatable-column [width]="200"  [sortable]="false"  [name]="'ID'" prop="id"></ngx-datatable-column>
                 <ngx-datatable-column [width]="400"  [sortable]="false"  [name]="'URL'" prop="url"></ngx-datatable-column>
                 <ngx-datatable-column [width]="500"  [sortable]="false" [name]="'Description'" prop="description"></ngx-datatable-column>
-                <ngx-datatable-column [width]="300" [sortable]="false"  >
-                        <ng-template let-row="row" ngx-datatable-cell-template>
-                          <button class="view-details" (click)="viewDetails(row?.id)">View Comments</button>
-                        </ng-template>
+                <ngx-datatable-column [width]="150">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <button class="btn btn-info btn-sm" (click)="viewDetails(row?.id)">View Feed</button>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [width]="150">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <button class="btn btn-primary btn-sm" (click)="update(row?.id)">Edit feed</button>
+                  </ng-template>
                 </ngx-datatable-column>
                 
         </ngx-datatable>

@@ -97,11 +97,11 @@ export class QueriesComponent implements OnInit,OnDestroy  {
  public search(){
     this.feedQuery.setVariables({filterNeedle:this.value}).then();  
   }
+  viewDetails(id: number) {
+    this.router.navigate([`feed/view/${id}`]);
+  }
   update(id: number) {
     this.router.navigate([`feed/update/${id}`]);
-  }
- public viewDetails(id:number){
-    this.router.navigate([`feed-details/${id}`]);
   }
   ngOnDestroy(): void {
     this.sub$?.unsubscribe();
