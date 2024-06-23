@@ -1,0 +1,22 @@
+:host ::ng-deep{
+    .ngx-datatable.material {
+        padding-bottom: 16px;
+    }
+    .ngx-datatable.material .datatable-header {
+        border-bottom: unset;
+        height: 40px !important;
+
+    }
+    .datatable-header-cell-template-wrap {
+        font-size: 16px;
+    }
+    datatable-body-row{
+        height: 50px !important;
+    }
+    datatable-body-cell{
+        height: 50px !important;
+    }
+    .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group{
+        background-color: unset !important;
+    }
+}

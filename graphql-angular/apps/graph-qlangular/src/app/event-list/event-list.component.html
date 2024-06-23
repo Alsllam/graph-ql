@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    <span>View Events List</span>
+    <div class="actions">
+        <button class="view-details btn-success btn mt-3" [routerLink]="['/create']">Create New Event</button>
+    </div>
+    <div class="more-data my-3">
+        <input type="checkbox" (change)="displayDetails($event)"> Display Details
+        <input type="checkbox" class="mx-2" (change)="displayDetails($event)"> Display Sessions
+        <input type="checkbox"> Display Attendees
+    </div>
+    <div class="card">
+        <ngx-datatable class="material expandable" [rows]="rows" #myTable>
+            <ngx-datatable-column [width]="200" [name]="'ID'" prop="id"></ngx-datatable-column>
+            <ngx-datatable-column [width]="350" [name]="'Title'" prop="body"></ngx-datatable-column>
+            <ngx-datatable-column [width]="300" [name]="'Date'" prop="date"></ngx-datatable-column>
+            <ngx-datatable-column *ngIf="haveDetails" [width]="300" [name]="'Details'"
+                prop="details"></ngx-datatable-column>
+            <ngx-datatable-column [width]="150">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <button class="view-details btn btn-info btn-sm" (click)="viewDetails(row?.id)">View Event</button>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [width]="150">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <button class="view-details btn btn-primary btn-sm" (click)="update(row?.id)">Edit Event</button>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [width]="150" [resizeable]="false" [sortable]="false" [draggable]="false"
+                [canAutoResize]="false">
+                <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                    <button class="btn btn-secondary" (click)="toggleExpandRow(row)">expand</button>
+                </ng-template>
+            </ngx-datatable-column>
+            <!-- Row Detail Template -->
+            <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
+                <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                    <div style="padding-left:35px;">
+                        <div><strong>Address</strong></div>
+                        <div>test</div>
+                    </div>
+                </ng-template>
+            </ngx-datatable-row-detail> 
+
+        </ngx-datatable>
+    </div>
+</div>
