@@ -3,34 +3,34 @@ import { type Link } from '@prisma/client'
 import type { GraphQLContext } from './context'
 
 const typeDefinitions = /* GraphQL */ `
- union Posts = Link | Comment
-
-  type Link {
-    id: ID!
-    description: String!
-    url: String!
-    comments: [Comment!]!
-  }
-  
-  type Comment {
-    id: ID!
-    body: String!
-    linkId: String
-  }
-  
-  type Query {
-    searchInPosts(contains: String): [Posts]
-    info: String!
-    feed: [Link!]!
-    feedFilter(filterNeedle: String): [Link!]!
-    feedPaging(filterNeedle: String, skip: Int, take: Int): [Link!]!
-    comment(id: ID!): Comment
-  }
-  
-  type Mutation {
-    postLink(url: String!, description: String!): Link!
-    postCommentOnLink(linkId: ID!, body: String!): Comment!
-  }
+ type Link {
+  id: ID!
+  description: String!
+  url: String!
+  comments: [Comment!]!
+}
+ 
+type Comment {
+  id: ID!
+  body: String!
+  linkId: String
+}
+ 
+type Query {
+  info: String!
+  feed: [Link!]!
+  feedFilter(filterNeedle: String): [Link!]!
+  feedPaging(filterNeedle: String, skip: Int, take: Int): [Link!]!
+  comment(id: ID!): Comment
+  feedById(id: Int!): Link!
+}
+ 
+type Mutation {
+  postLink(url: String!, description: String!): Link!
+  postCommentOnLink(linkId: ID!, body: String!): Comment!
+  updateFeed(id: Int!, url: String!, description: String!): Link!
+  deleteFeed(id: Int!): Link!
+}
 `
 
 
@@ -46,7 +46,12 @@ const resolvers = {
             return context.prisma.comment.findUnique({
             where: { id: parseInt(args.id) }
         })
-    },
+      },
+      async feedById(parent: unknown, args: { id: string }, context: GraphQLContext) {
+        return context.prisma.link.findUnique({
+          where: { id: parseInt(args.id) }
+        })
+      },
       async feedFilter(parent: unknown, args: { filterNeedle?: string }, context: GraphQLContext) {
         const where = args.filterNeedle
           ? {
@@ -106,6 +111,22 @@ const resolvers = {
         })
         return newLink
       },
+      async updateFeed(
+        parent: unknown,
+        args: { id: number, description: string; url: string },
+        context: GraphQLContext
+      ) {
+        const newLink = await context.prisma.link.update({
+          data: {
+            url: args.url,
+            description: args.description
+          },
+          where: {
+            id: args.id
+          }
+        })
+        return newLink
+      },
       async postCommentOnLink(
         parent: unknown,
         args: { linkId: string; body: string },
@@ -119,6 +140,18 @@ const resolvers = {
           })
      
           return newComment
+      },
+      async deleteFeed(
+        parent: unknown,
+        args: { id: number },
+        context: GraphQLContext
+      ) {
+        const link = await context.prisma.link.delete({
+            where: {
+              id: args.id
+            }
+        })
+          return link
       }
     }
   }

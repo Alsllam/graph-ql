@@ -14,18 +14,23 @@ import { FeedDetailsComponent } from './feed-details/feed-details.component';
 import { offsetLimitPagination } from '@apollo/client/utilities';
 import { FormsModule } from '@angular/forms';
 import { createFragmentRegistry } from '@apollo/client/cache';
+import { CreateUpdateFeedComponent } from './create-update-feed/create-update-feed.component';
+import { AddCommentComponent } from './add-comment/add-comment.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
     NxWelcomeComponent,
     QueriesComponent,
-    FeedDetailsComponent,
+    CreateUpdateFeedComponent,
+    AddCommentComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     HttpClientModule,
     ApolloModule,
+    ReactiveFormsModule,
     NgxDatatableModule,
     FormsModule,
   ],

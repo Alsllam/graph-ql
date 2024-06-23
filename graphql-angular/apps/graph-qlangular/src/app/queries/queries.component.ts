@@ -1,3 +1,4 @@
+import { Feeds } from '../feeds';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo, QueryRef, gql } from "apollo-angular";
@@ -96,6 +97,8 @@ export class QueriesComponent implements OnInit,OnDestroy  {
  public search(){
     this.feedQuery.setVariables({filterNeedle:this.value}).then();  
   }
+  update(id: number) {
+    this.router.navigate([`feed/update/${id}`]);
  public viewDetails(id:number){
     this.router.navigate([`feed/${id}`]);
   }
