@@ -1,6 +1,8 @@
-import { createSchema } from 'graphql-yoga'
+import { createSchema, createPubSub } from 'graphql-yoga'
 import { type Event, type Session, type Attendee } from '@prisma/client'
 import type { GraphQLContext } from './context'
+
+const pubSub = createPubSub()
 
 const typeDefinitions = /* GraphQL */ `
   type Event {
@@ -46,6 +48,8 @@ const typeDefinitions = /* GraphQL */ `
   
   type Subscription {
     countdown(from: Int!): Int!
+    attendeeRegistered: Attendee
+    eventUpdated: Event
   }
 
 `
@@ -135,6 +139,20 @@ const resolvers = {
           })
           return newEvent
       },
+      async updateEvent(parent: unknown, args: {id: string;name: string; date: string; details: string}, context: GraphQLContext){
+        const newEvent = await context.prisma.event.update({
+            data: {
+              body: args.name,
+              date: new Date(),
+              details: args.details,
+            },
+            where: {
+              id: parseInt(args.id)
+            }
+          });
+          pubSub.publish('eventUpdated', newEvent)
+          return newEvent
+      },
       async registerAttendee(parent: unknown, args: {sessionId: string; name: string; email: string}, context: GraphQLContext){
         let attendee = await context.prisma.attendee.findFirst({
           where: {
@@ -153,12 +171,14 @@ const resolvers = {
         }
 
         const newAttendee = await context.prisma.sessionAttendees.create({
-            data: {
-              sessionId: parseInt(args.sessionId),
-              attendeeId: attendee.id
-            }
-          })
-          return newAttendee
+          data: {
+            sessionId: parseInt(args.sessionId),
+            attendeeId: attendee.id
+          }
+        })
+        pubSub.publish('attendeeRegistered', attendee)
+        return newAttendee
+        
       },
 
       async createSession(parent: unknown, args: {eventId: string; title: string; startTime: string; endTime: string}, context: GraphQLContext){
@@ -171,7 +191,20 @@ const resolvers = {
             }
           })
           return newSession
-      }
+      },
+      async updateSession(parent: unknown, args: {id: string; title: string; startTime: string; endTime: string}, context: GraphQLContext){
+        const newSession = await context.prisma.session.update({
+            data: {
+              title: args.title,
+              startTime: new Date(),
+              endTime: new Date(),
+            },
+            where: {
+              id: parseInt(args.id)
+            }
+          });
+          return newSession
+      },
    
     },
     Subscription: {
@@ -183,6 +216,14 @@ const resolvers = {
             yield { countdown: i }
           }
         }
+      },
+      attendeeRegistered: {
+        subscribe: () => pubSub.subscribe('attendeeRegistered'),
+        resolve: (payload: any) => payload
+      },
+      eventUpdated: {
+        subscribe: () => pubSub.subscribe('eventUpdated'),
+        resolve: (payload: any) => payload
       }
     }
   }
