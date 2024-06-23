@@ -1,14 +1,6 @@
 .card{
     margin-top: 24px;
-    .view-details{
-        cursor: pointer;
-        padding: 10px 15px;
-        background-color: #304ffec9;
-        color: white;
-        border: unset;
-        outline: unset;
-        border-radius: 10px;
-    }
+
 }
 :host ::ng-deep{
     .ngx-datatable.material {

@@ -1,19 +1,33 @@
-<span>View Feed List</span>
-<div class="card">
-        <ngx-datatable class="material" [rows]="rows">
-                <ngx-datatable-column [width]="200"  [name]="'ID'" prop="id"></ngx-datatable-column>
-                <ngx-datatable-column [width]="350"  [name]="'URL'" prop="url"></ngx-datatable-column>
-                <ngx-datatable-column [width]="300" [name]="'Description'" prop="description"></ngx-datatable-column>
-                <ngx-datatable-column [width]="300" >
-                        <ng-template let-row="row" ngx-datatable-cell-template>
-                          <button class="view-details" (click)="viewDetails(row?.id)">View Details</button>
-                        </ng-template>
-                </ngx-datatable-column>
-                
-        </ngx-datatable>
+<div class="container-fluid">
+
+
+  <span>View Feed List</span>
+  <div class="actions">
+    <button class="view-details btn-success btn mt-3" [routerLink]="['/create']">Create new feed</button>
+
+  </div>
+  <div class="card">
+    <ngx-datatable class="material" [rows]="rows">
+      <ngx-datatable-column [width]="200" [name]="'ID'" prop="id"></ngx-datatable-column>
+      <ngx-datatable-column [width]="350" [name]="'URL'" prop="url"></ngx-datatable-column>
+      <ngx-datatable-column [width]="300" [name]="'Description'" prop="description"></ngx-datatable-column>
+      <ngx-datatable-column [width]="150">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <button class="view-details btn btn-info btn-sm" (click)="viewDetails(row?.id)">View Feed</button>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [width]="150">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <button class="view-details btn btn-primary btn-sm" (click)="update(row?.id)">Edit feed</button>
+        </ng-template>
+      </ngx-datatable-column>
+
+    </ngx-datatable>
+  </div>
 </div>
-                
-                <!-- [columnMode]="ColumnMode?.force"
+
+
+<!-- [columnMode]="ColumnMode?.force"
                 [headerHeight]="50"
                 [footerHeight]="50"
                 rowHeight="auto"

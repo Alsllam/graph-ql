@@ -1,0 +1,17 @@
+<div class="card p-5 m-5 w-50 mx-auto border-0 shadow-sm bg-light">
+  <p><strong>Add comment to feed.</strong></p>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="mb-3 form-group">
+      <label for="feed">Feeds</label>
+      <select class="form-select" formControlName="feed" id="feed">
+        <option value="" disabled selected>Select Feed</option>
+        <option *ngFor="let feed of feeds" [value]="feed.id">{{feed.url}}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" formControlName="description" id="description" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Add</button>
+  </form>
+</div>

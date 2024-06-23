@@ -11,18 +11,23 @@ import { InMemoryCache } from '@apollo/client/core';
 import { QueriesComponent } from './queries/queries.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FeedDetailsComponent } from './feed-details/feed-details.component';
+import { CreateUpdateFeedComponent } from './create-update-feed/create-update-feed.component';
+import { AddCommentComponent } from './add-comment/add-comment.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
     NxWelcomeComponent,
     QueriesComponent,
-    FeedDetailsComponent,
+    CreateUpdateFeedComponent,
+    AddCommentComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     HttpClientModule,
     ApolloModule,
+    ReactiveFormsModule,
     NgxDatatableModule,
   ],
   providers: [
