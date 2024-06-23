@@ -14,6 +14,7 @@ import { FeedDetailsComponent } from './feed-details/feed-details.component';
 import { CreateUpdateFeedComponent } from './create-update-feed/create-update-feed.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EventListComponent } from './event-list/event-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     QueriesComponent,
     CreateUpdateFeedComponent,
     AddCommentComponent,
+    EventListComponent,
   ],
   imports: [
     BrowserModule,

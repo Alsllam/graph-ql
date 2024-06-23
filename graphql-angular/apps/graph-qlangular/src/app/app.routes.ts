@@ -2,9 +2,11 @@ import { Route } from '@angular/router';
 import { AddCommentComponent } from './add-comment/add-comment.component';
 import { QueriesComponent } from './queries/queries.component';
 import { CreateUpdateFeedComponent } from './create-update-feed/create-update-feed.component';
+import { EventListComponent } from './event-list/event-list.component';
 
 export const appRoutes: Route[] = [
-  { path: '', component: QueriesComponent },
+  { path: '', component: EventListComponent },
+  // { path: '', component: QueriesComponent },
   { path: 'feed/:id', component: AddCommentComponent },
   {
     path: 'create',
