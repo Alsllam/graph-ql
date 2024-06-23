@@ -21,3 +21,54 @@ model Comment {
   link      Link?    @relation(fields: [linkId], references: [id])
   linkId    Int?
 }
+
+
+
+model Event {
+  id        Int      @id @default(autoincrement())
+  body      String
+  date      DateTime
+  details    String?
+  sessions    Session[]
+}
+
+model Attendee {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email      String
+  sessionAttendees SessionAttendees[]
+}
+
+model Speaker {
+  id        Int      @id @default(autoincrement())
+  name      String
+  bio      String
+  SessionSpeakers SessionSpeakers[]
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  title      String
+  startTime      DateTime
+  endTime      DateTime
+  event      Event    @relation(fields: [eventId], references: [id])
+  eventId    Int
+  sessionAttendees SessionAttendees[]
+  SessionSpeakers SessionSpeakers[]
+}
+
+model SessionAttendees  {
+  id        Int      @id @default(autoincrement())
+  session      Session    @relation(fields: [sessionId], references: [id])
+  sessionId    Int
+  attendee      Attendee    @relation(fields: [attendeeId], references: [id])
+  attendeeId    Int
+}
+
+model SessionSpeakers  {
+  id        Int      @id @default(autoincrement())
+  session      Session    @relation(fields: [sessionId], references: [id])
+  sessionId    Int
+  speaker      Speaker    @relation(fields: [speakerId], references: [id])
+  speakerId    Int
+}
