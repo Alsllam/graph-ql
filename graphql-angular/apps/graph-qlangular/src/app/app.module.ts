@@ -19,6 +19,7 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 import { Kind, OperationTypeNode } from 'graphql';
 
+import { EventListComponent } from './event-list/event-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +27,7 @@ import { Kind, OperationTypeNode } from 'graphql';
     QueriesComponent,
     CreateUpdateFeedComponent,
     AddCommentComponent,
+    EventListComponent,
   ],
   imports: [
     BrowserModule,

@@ -30,9 +30,12 @@ const typeDefinitions = /* GraphQL */ `
   }
   type Query {
     info: String!
-    events: [Event]!
-    attendees: [Attendee]!
-    session: [Session]!
+    events(filterNeedle: String, skip: Int, take: Int): [Event]!
+    event(id: ID!): [Event]!
+    attendees(filterNeedle: String, skip: Int, take: Int): [Attendee]!
+    attendee(id: ID!): [Attendee]!
+    sessions(filterNeedle: String, skip: Int, take: Int): [Session]!
+    session(id: ID!): [Session]!
   }
   type Mutation {
     createEvent(name: String!, date: String!, details: String): Event
@@ -59,9 +62,56 @@ const typeDefinitions = /* GraphQL */ `
 const resolvers = {
     Query: {
       info: () => `This is the API of a Hackernews Clone`,
-      events: (parent: unknown, args: {}, context: GraphQLContext) => context.prisma.event.findMany(),
-      attendees: (parent: unknown, args: {}, context: GraphQLContext) => context.prisma.attendee.findMany(),
-      session: (parent: unknown, args: {}, context: GraphQLContext) => context.prisma.session.findMany(),
+      events(parent: unknown, args: {filterNeedle?: string; skip?: number; take?: number}, context: GraphQLContext) {
+        const where = args.filterNeedle 
+          ? {
+              OR: [
+                { body: { contains: args.filterNeedle } },
+                { details: { contains: args.filterNeedle } }
+              ]
+            }
+          : {}
+
+          return context.prisma.event.findMany({
+            where,
+            skip: args.skip,
+            take: args.take
+          })
+      },
+      event: (parent: unknown, args: {id: string}, context: GraphQLContext) => context.prisma.event.findUnique({where: {id: parseInt(args.id)}}),
+      attendees(parent: unknown, args: {filterNeedle?: string; skip?: number; take?: number}, context: GraphQLContext) {
+        const where = args.filterNeedle 
+          ? {
+              OR: [
+                { name: { contains: args.filterNeedle } },
+                { email: { contains: args.filterNeedle } }
+              ]
+            }
+          : {}
+
+          return context.prisma.attendee.findMany({
+            where,
+            skip: args.skip,
+            take: args.take
+          })
+      },
+      attendee: (parent: unknown, args: {id: string}, context: GraphQLContext) => context.prisma.attendee.findUnique({where: {id: parseInt(args.id)}}),
+      sessions: (parent: unknown, args: {filterNeedle?: string; skip?: number; take?: number}, context: GraphQLContext) =>  {
+        const where = args.filterNeedle 
+          ? {
+              OR: [
+                { title: { contains: args.filterNeedle } },
+              ]
+            }
+          : {}
+
+          return context.prisma.session.findMany({
+            where,
+            skip: args.skip,
+            take: args.take
+          })
+      },
+      session: (parent: unknown, args: {id: string}, context: GraphQLContext) => context.prisma.session.findUnique({where: {id: parseInt(args.id)}}),
     },
     Event: {
       id: (parent: Event) => parent.id,
