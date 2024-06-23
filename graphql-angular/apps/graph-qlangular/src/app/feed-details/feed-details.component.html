@@ -1,1 +1,8 @@
-<p>feed-details works!</p>
+<div class="card" >
+    <div class="card-body" *ngIf="details">
+        {{details.body}}
+    </div>
+    <div class="card-body" *ngIf="!details">
+        there's no comments to display
+    </div>
+</div>
