@@ -31,11 +31,11 @@ const typeDefinitions = /* GraphQL */ `
   type Query {
     info: String!
     events(filterNeedle: String, skip: Int, take: Int): [Event]!
-    event(id: ID!): [Event]!
+    event(id: ID!): Event!
     attendees(filterNeedle: String, skip: Int, take: Int): [Attendee]!
-    attendee(id: ID!): [Attendee]!
+    attendee(id: ID!): Attendee!
     sessions(filterNeedle: String, skip: Int, take: Int): [Session]!
-    session(id: ID!): [Session]!
+    session(id: ID!): Session!
   }
   type Mutation {
     createEvent(name: String!, date: String!, details: String): Event
@@ -203,6 +203,15 @@ const resolvers = {
           pubSub.publish('eventUpdated', newEvent)
           return newEvent
       },
+      async deleteEvent(parent: unknown, args: {id: string}, context: GraphQLContext){
+        const newEvent = await context.prisma.event.delete({
+            where: {
+              id: parseInt(args.id)
+            }
+          });
+          pubSub.publish('eventUpdated', newEvent)
+          return newEvent
+      },
       async registerAttendee(parent: unknown, args: {sessionId: string; name: string; email: string}, context: GraphQLContext){
         let attendee = await context.prisma.attendee.findFirst({
           where: {
@@ -254,6 +263,15 @@ const resolvers = {
             }
           });
           return newSession
+      },
+      async deleteSession(parent: unknown, args: {id: string}, context: GraphQLContext){
+        const newEvent = await context.prisma.session.delete({
+            where: {
+              id: parseInt(args.id)
+            }
+          });
+          pubSub.publish('eventUpdated', newEvent)
+          return newEvent
       },
    
     },
