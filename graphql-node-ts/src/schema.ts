@@ -19,6 +19,7 @@ type Comment {
 type Query {
   info: String!
   feed: [Link!]!
+  searchInPosts(contains: String): [Link!]!
   feedFilter(filterNeedle: String): [Link!]!
   feedPaging(filterNeedle: String, skip: Int, take: Int): [Link!]!
   comment(id: ID!): Comment
