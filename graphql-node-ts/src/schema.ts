@@ -3,37 +3,43 @@ import { type Link } from '@prisma/client'
 import type { GraphQLContext } from './context'
 
 const typeDefinitions = /* GraphQL */ `
- type Link {
-  id: ID!
-  description: String!
-  url: String!
-  comments: [Comment!]!
-}
- 
-type Comment {
-  id: ID!
-  body: String!
-  linkId: String
-}
- 
-type Query {
-  info: String!
-  feed: [Link!]!
-  feedFilter(filterNeedle: String): [Link!]!
-  feedPaging(filterNeedle: String, skip: Int, take: Int): [Link!]!
-  comment(id: ID!): Comment
-}
- 
-type Mutation {
-  postLink(url: String!, description: String!): Link!
-  postCommentOnLink(linkId: ID!, body: String!): Comment!
-}
+ union Posts = Link | Comment
+
+  type Link {
+    id: ID!
+    description: String!
+    url: String!
+    comments: [Comment!]!
+  }
+  
+  type Comment {
+    id: ID!
+    body: String!
+    linkId: String
+  }
+  
+  type Query {
+    searchInPosts(contains: String): [Posts]
+    info: String!
+    feed: [Link!]!
+    feedFilter(filterNeedle: String): [Link!]!
+    feedPaging(filterNeedle: String, skip: Int, take: Int): [Link!]!
+    comment(id: ID!): Comment
+  }
+  
+  type Mutation {
+    postLink(url: String!, description: String!): Link!
+    postCommentOnLink(linkId: ID!, body: String!): Comment!
+  }
 `
 
 
 
 const resolvers = {
     Query: {
+      searchInPosts(parent: unknown, args: { contains: String }, context: GraphQLContext){
+        return context.prisma.comment.findMany();
+      },
       info: () => `This is the API of a Hackernews Clone`,
       feed: (parent: unknown, args: {}, context: GraphQLContext) => context.prisma.link.findMany(),
       async comment(parent: unknown, args: { id: string }, context: GraphQLContext) {

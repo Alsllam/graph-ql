@@ -19,7 +19,7 @@ export class FeedDetailsComponent implements OnInit {
         this.getData(res['id']);
       })
   }
-  public getData(id:number) {
+  private getData(id:number) {
     const GET_DATA = gql`
       query GetComment($id: ID!) {
         comment(id:$id){
@@ -33,8 +33,7 @@ export class FeedDetailsComponent implements OnInit {
       variables:{id:id},
     });
     this.feedQuery.valueChanges.subscribe(({data})=>{
-      this.details = data?.comment
-      console.log('this.details' , this.details);
+      this.details = data?.comment;
     })
     
   }

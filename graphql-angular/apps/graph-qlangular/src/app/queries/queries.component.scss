@@ -1,5 +1,31 @@
+.title{
+    font-size: larger;
+    font-weight: bold;
+}
 .card{
     margin-top: 24px;
+    .search{
+        margin-bottom: 16px;
+        display: flex;
+        gap: 10px;
+        font-size: 16px;
+        input{
+            padding: 10px 14px;
+            border: 1px solid #8080806e;
+            outline: unset;
+            border-radius: 10px;
+            flex-grow: 0.3;
+        }
+        button{
+            cursor: pointer;
+            padding: 10px 15px;
+            background-color: #304ffec9;
+            color: white;
+            border: unset;
+            outline: unset;
+            border-radius: 10px;
+        }
+    }
     .view-details{
         cursor: pointer;
         padding: 10px 15px;
@@ -9,7 +35,28 @@
         outline: unset;
         border-radius: 10px;
     }
+    .pagination{
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 0;
+        button{
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            border: unset;
+            outline: unset;
+            border-radius: 10px;
+        }
+        .next{
+            background-color: #0080008f;
+        }
+        .previous{
+            background-color: #ff0000c9;
+        }
+    }
 }
+
 :host ::ng-deep{
     .ngx-datatable.material {
         padding-bottom: 16px;

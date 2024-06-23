@@ -1,24 +1,25 @@
-<span>View Feed List</span>
+<span class="title">View Feed List</span>
 <div class="card">
-        <ngx-datatable class="material" [rows]="rows">
-                <ngx-datatable-column [width]="200"  [name]="'ID'" prop="id"></ngx-datatable-column>
-                <ngx-datatable-column [width]="350"  [name]="'URL'" prop="url"></ngx-datatable-column>
-                <ngx-datatable-column [width]="300" [name]="'Description'" prop="description"></ngx-datatable-column>
-                <ngx-datatable-column [width]="300" >
+        <!-- <div class="search">
+                <input type="search" [(ngModel)]="value">
+                <button (click)="search()">Search</button>
+        </div> -->
+        <!-- <button (click)="refetch()">refectch</button> -->
+        <!-- <button (click)="stopPolling()">Stop polling</button> -->
+        <ngx-datatable class="material" [rows]="feeds|async" [limit]="5" [count]="5" [externalPaging]="true">
+                <ngx-datatable-column [width]="200"  [sortable]="false"  [name]="'ID'" prop="id"></ngx-datatable-column>
+                <ngx-datatable-column [width]="400"  [sortable]="false"  [name]="'URL'" prop="url"></ngx-datatable-column>
+                <ngx-datatable-column [width]="500"  [sortable]="false" [name]="'Description'" prop="description"></ngx-datatable-column>
+                <ngx-datatable-column [width]="300" [sortable]="false"  >
                         <ng-template let-row="row" ngx-datatable-cell-template>
-                          <button class="view-details" (click)="viewDetails(row?.id)">View Details</button>
+                          <button class="view-details" (click)="viewDetails(row?.id)">View Comments</button>
                         </ng-template>
                 </ngx-datatable-column>
                 
         </ngx-datatable>
+        <div class="pagination">
+                <button class="previous" (click)="previous()">previous</button>
+                <button class="next" (click)="next()">next</button>
+                <!-- <button class="next" (click)="loadMore()">Load More</button> -->
+        </div>
 </div>
-                
-                <!-- [columnMode]="ColumnMode?.force"
-                [headerHeight]="50"
-                [footerHeight]="50"
-                rowHeight="auto"
-                [externalPaging]="true"
-                [count]="page?.totalElements"
-                [offset]="page?.pageNumber"
-                [limit]="page?.size"
-                (page)="setPage($event)" -->
