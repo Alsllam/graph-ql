@@ -39,7 +39,7 @@
             <!-- Row Detail Template -->
             <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
                 <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
-                    <div *ngIf="row.sessions && haveSessions">
+                    <div class="d-flex flex-column" *ngIf="row.sessions && haveSessions">
                         <span class="mb-2"><strong>Available Sessions</strong></span>
                         <div class="details" *ngFor="let session of row.sessions">
                             <div class="d-flex flex-column">
@@ -57,10 +57,9 @@
                         </div>
                         <span *ngIf="!row.sessions.length&& haveSessions">There is No Sessions</span>
                     </div>
-                    <span class="mb-2"><strong>Attendees</strong></span>
-                    <div  *ngIf="row.sessions && haveAtendees">
-                        <div *ngFor="let attendees of row.sessions">
-                            <div  class="details" *ngFor="let attendee of attendees.attendees ">
+                    <span class="mb-2" *ngIf="!haveSessions"><strong>Attendees</strong></span>
+                    <div  *ngIf="row.attendees && haveAtendees">
+                            <div  class="details" *ngFor="let attendee of row.attendees ">
                                 <div class="d-flex flex-column">
                                     <span><strong>name</strong></span>
                                     <span>{{attendee.name}}</span>
@@ -69,9 +68,8 @@
                                     <span><strong>Email</strong></span>
                                     <span>{{attendee.email}}</span>
                                 </div>
-                                <span *ngIf=" !attendee || !attendees">There is No Attendees</span>
                             </div>
-                        </div>
+                            <span *ngIf="!row.attendees.length">There is No Attendees</span>
                     </div>
                 </ng-template>
             </ngx-datatable-row-detail>

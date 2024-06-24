@@ -54,14 +54,9 @@ query {
             body
             date
             details
-            sessions{
-                title
-                startTime
-                endTime
-                attendees{
-                    name
-                    email
-                }
+            attendees{
+                name
+                email
             }
         }
   }
