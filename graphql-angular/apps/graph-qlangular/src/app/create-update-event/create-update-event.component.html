@@ -1,0 +1,27 @@
+<div class="card p-5 m-5 w-50 mx-auto border-0 shadow-sm bg-light">
+  <p><strong *ngIf="!isUpdateMode">Create Event.</strong></p>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" formControlName="name" id="name">
+    </div>
+    <div class="mb-3">
+      <label for="date" class="form-label">Date</label>
+      <input type="date" class="form-control" formControlName="date" id="date">
+    </div>
+    <div class="mb-3">
+      <label for="details" class="form-label">Details</label>
+      <textarea class="form-control" formControlName="details" id="details" rows="3"></textarea>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-success">
+        <span *ngIf="!isUpdateMode">Create</span>
+        <span *ngIf="isUpdateMode">update</span>
+      </button>
+      <button class="btn btn btn-primary" routerLink="/"><span *ngIf="!isUpdateMode">Cancel</span> <span>Back to
+          events</span> </button>
+    </div>
+
+  </form>
+</div>

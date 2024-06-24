@@ -20,6 +20,8 @@ import { createClient } from 'graphql-ws';
 import { Kind, OperationTypeNode } from 'graphql';
 
 import { EventListComponent } from './event-list/event-list.component';
+import { CreateUpdateEventComponent } from './create-update-event/create-update-event.component';
+import { CreateUpdateSessionComponent } from './create-update-session/create-update-session.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +29,9 @@ import { EventListComponent } from './event-list/event-list.component';
     QueriesComponent,
     CreateUpdateFeedComponent,
     AddCommentComponent,
+    CreateUpdateEventComponent,
     EventListComponent,
+    CreateUpdateSessionComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,7 @@ import { EventListComponent } from './event-list/event-list.component';
         const ws = new GraphQLWsLink(
           createClient({
             url: 'ws://localhost:4000/graphql',
-          }),
+          })
         );
 
         // Using the ability to split links, you can send data to each link
@@ -65,7 +69,7 @@ import { EventListComponent } from './event-list/event-list.component';
             );
           },
           ws,
-          http,
+          http
         );
 
         return {
