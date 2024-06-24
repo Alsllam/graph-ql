@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Apollo, QueryRef } from 'apollo-angular';
 import { Subscription } from 'rxjs';
 import { GET_EVENTS, GET_EVENTS_DETAILS, GET_EVENTS_SESSIONS, GET_EVENTS_ATENDEES } from '../gql/events-query';
+import { WatchQueryFetchPolicy } from '@apollo/client';
 @Component({
   selector: 'graphql-angular-event-list',
   templateUrl: './event-list.component.html',
@@ -18,6 +19,14 @@ export class EventListComponent implements OnInit, OnDestroy {
   haveDetails: boolean;
   haveSessions: boolean;
   haveAtendees: boolean;
+  cacheFirst:string;
+  cacheOnly:string;
+  cacheAndNetwork:string;
+  filterText:string;
+  networkOnly:string;
+  noCache:string;
+  standby:string;
+  fetchPolicy:WatchQueryFetchPolicy;
   isPolling = false;
   eventsQuery: QueryRef<any>;
   skip = 0;
@@ -145,10 +154,27 @@ export class EventListComponent implements OnInit, OnDestroy {
   setPage(pageInfo: any) {
     this.haveAtendees = false;
     this.haveSessions = false;
+    this.haveDetails = false;
     this.eventsQuery.setVariables({
       skip: pageInfo.offset * pageInfo.limit,
       filterNeedle:'', 
       take: pageInfo.limit
+    })
+    this.eventsQuery.setOptions({
+      fetchPolicy: this.fetchPolicy
+    })
+  }
+  getSelectedNetwork(event:any){
+    this.fetchPolicy = event.target.value;
+    this.eventsQuery.setOptions({
+      fetchPolicy: this.fetchPolicy
+    })
+  }
+  search(){
+    this.eventsQuery.setVariables({
+      skip: this.skip,
+      filterNeedle:this.filterText, 
+      take:10
     })
   }
 }

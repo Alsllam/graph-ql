@@ -1,72 +1,32 @@
-<span class="w-100 d-flex justify-content-center my-3"><strong>View Events List</strong></span>
+<h3 class="w-100 d-flex justify-content-center my-3">View Events List</h3>
 <div class="layout">
-    <div class="col-2">
-        <div class="d-flex flex-column">
-            <div class="my-3 ">
-                <span class="mx-2"><strong>Display options</strong></span>
-                <div class="graph-options">
-                    <span class="options ">
-                        <input type="checkbox" class="mx-1" [(ngModel)]="haveDetails" (change)="displayDetails($event)"> Display Details
-                    </span>
-                    <span class="options ">
-                        <input type="checkbox" class="mx-1" [(ngModel)]="haveSessions" (change)="displaySessions($event)"> Display Sessions
-                    </span>
-                    <span class="options ">
-                        <input type="checkbox" class="mx-1" [(ngModel)]="haveAtendees" (change)="displayAttendees($event)"> Display Attendees
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex flex-column">
-            <div class="my-3">
-                <span class="mx-2"><strong>Network options</strong></span>
-                <div class="graph-options">
-                    <span class="options">
-                        <input type="radio" name="network" value="Cache First" [(ngModel)]="haveDetails" (change)="displayDetails($event)"> Cache First
-                    </span>
-                    <span class="options">
-                        <input type="radio" name="network" value="Cache Only" [(ngModel)]="haveSessions" (change)="displaySessions($event)"> Cache Only
-                    </span>
-                    <span class="options">
-                        <input type="radio" name="network" value="Cache And Network" [(ngModel)]="haveAtendees" (change)="displayAttendees($event)"> Cache And Network
-                    </span>
-                    <span class="options">
-                        <input type="radio" name="network" value="network-only" [(ngModel)]="haveAtendees" (change)="displayAttendees($event)"> network-only
-                    </span>
-                    <span class="options">
-                        <input type="radio" name="network" value="no-cache" [(ngModel)]="haveAtendees" (change)="displayAttendees($event)"> no-cache
-                    </span>
-                    <span class="options">
-                        <input type="radio" name="network" value="standby" [(ngModel)]="haveAtendees" (change)="displayAttendees($event)"> standby
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="my-2">
-            <span class="mx-2"><strong>Update options</strong></span>
-            <div class="mt-2 mx-3">
-                <button class="btn btn-warning"  (click)="Polling()">{{isPolling?'Cancel Update': 'Update Every 0.5s'}} </button>
-                <button class="btn btn-info mx-2" (click)="refresh()">Update Now</button>
-            </div>
-        </div>
-    </div>
     <div class="card col-10">
-        <div class="d-flex justify-content-end w-100 mb-2">
-            <button class="view-details btn-success btn mt-3" [routerLink]="['/create']">Create New Event</button>
+        <div class="d-flex justify-content-between w-100 mb-3">
+            <button class="view-details btn-success btn mt-2" [routerLink]="['/create']">Create New Event</button>
+            <div class="mt-2">
+                <button class="btn btn-primary mx-2 " (click)="search()">Search</button>
+                <input type="text" class="search" [(ngModel)]="filterText">
+            </div>
         </div>
         <ngx-datatable class="material expandable" [rows]="rows" [count]="totalCount" [limit]="10" [footerHeight]="50" #myTable
         [externalPaging]="true"   (page)="setPage($event)">
-            <ngx-datatable-column [width]="200" [name]="'ID'" prop="id"></ngx-datatable-column>
-            <ngx-datatable-column [width]="350" [name]="'Title'" prop="body"></ngx-datatable-column>
-            <ngx-datatable-column [width]="300" [name]="'Date'" prop="date"></ngx-datatable-column>
+            <ngx-datatable-column [width]="200" [name]="'ID'" prop="id" [resizeable]="false" [sortable]="false" [draggable]="false"
+            [canAutoResize]="false"></ngx-datatable-column>
+            <ngx-datatable-column [width]="350" [name]="'Title'" prop="body" [resizeable]="false" [sortable]="false" [draggable]="false"
+            [canAutoResize]="false"></ngx-datatable-column>
+            <ngx-datatable-column [width]="300" [name]="'Date'" prop="date" [resizeable]="false" [sortable]="false" [draggable]="false"
+            [canAutoResize]="false"></ngx-datatable-column>
             <ngx-datatable-column *ngIf="haveDetails" [width]="300" [name]="'Details'"
-                prop="details"></ngx-datatable-column>
-            <ngx-datatable-column [width]="150">
+                prop="details" [resizeable]="false" [sortable]="false" [draggable]="false"
+                [canAutoResize]="false"></ngx-datatable-column>
+            <ngx-datatable-column [width]="150" [resizeable]="false" [sortable]="false" [draggable]="false"
+            [canAutoResize]="false">
                 <ng-template let-row="row" ngx-datatable-cell-template>
                     <button class="view-details btn btn-info btn-sm" (click)="viewDetails(row?.id)">View Event</button>
                 </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column [width]="150">
+            <ngx-datatable-column [width]="150" [resizeable]="false" [sortable]="false" [draggable]="false"
+            [canAutoResize]="false">
                 <ng-template let-row="row" ngx-datatable-cell-template>
                     <button class="view-details btn btn-primary btn-sm" (click)="update(row?.id)">Edit Event</button>
                 </ng-template>
@@ -122,6 +82,56 @@
             </ngx-datatable-row-detail>
 
         </ngx-datatable>
+    </div>
+    <div class="col-2">
+        <div class="d-flex flex-column">
+            <div class="my-3 ">
+                <span class="mx-2"><strong>Display options</strong></span>
+                <div class="graph-options">
+                    <span class="options ">
+                        <input type="checkbox" class="mx-1" [(ngModel)]="haveDetails" (change)="displayDetails($event)"> Display Details
+                    </span>
+                    <span class="options ">
+                        <input type="checkbox" class="mx-1" [(ngModel)]="haveSessions" (change)="displaySessions($event)"> Display Sessions
+                    </span>
+                    <span class="options ">
+                        <input type="checkbox" class="mx-1" [(ngModel)]="haveAtendees" (change)="displayAttendees($event)"> Display Attendees
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-column">
+            <div class="my-3">
+                <span class="mx-2"><strong>Network options</strong></span>
+                <div class="graph-options">
+                    <span class="options">
+                        <input type="radio" name="network" value="cache-first" [(ngModel)]="cacheFirst" (change)="getSelectedNetwork($event)"> Cache First
+                    </span>
+                    <span class="options">
+                        <input type="radio" name="network" value="cache-only" [(ngModel)]="cacheOnly" (change)="getSelectedNetwork($event)"> Cache Only
+                    </span>
+                    <span class="options">
+                        <input type="radio" name="network" value="cache-and-network" [(ngModel)]="cacheAndNetwork" (change)="getSelectedNetwork($event)"> Cache And Network
+                    </span>
+                    <span class="options">
+                        <input type="radio" name="network" value="network-only" [(ngModel)]="networkOnly" (change)="getSelectedNetwork($event)"> Network Only
+                    </span>
+                    <span class="options">
+                        <input type="radio" name="network" value="no-cache" [(ngModel)]="noCache" (change)="getSelectedNetwork($event)"> No Cache
+                    </span>
+                    <span class="options">
+                        <input type="radio" name="network" value="standby" [(ngModel)]="standby" (change)="getSelectedNetwork($event)"> Standby
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="my-2">
+            <span class="mx-2"><strong>Update options</strong></span>
+            <div class="mt-2 mx-3">
+                <button class="btn btn-warning"  (click)="Polling()">{{isPolling?'Cancel Update': 'Update Every 0.5s'}} </button>
+                <button class="btn btn-info mx-2" (click)="refresh()">Update Now</button>
+            </div>
+        </div>
     </div>
     <!-- <div class="w-100 d-flex justify-content-between mt-3">
         <button class="btn btn-danger" (click)="previous()" [disabled]="skip<10">Previous</button>
