@@ -9,6 +9,16 @@
             border-bottom: 1px solid #8080804a;
         }
     }
+    .graph-options{
+        display: flex;
+        gap: 15px;
+        margin-top: 10px;
+        .options{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
     .ngx-datatable.material {
         padding-bottom: 16px;
     }
@@ -21,10 +31,10 @@
         font-size: 16px;
     }
     datatable-body-row{
-        height: 50px !important;
+        height: 55px !important;
     }
     datatable-body-cell{
-        height: 50px !important;
+        height: 55px !important;
     }
     .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group{
         background-color: unset !important;

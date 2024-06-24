@@ -14,7 +14,7 @@ import { FeedDetailsComponent } from './feed-details/feed-details.component';
 import { CreateUpdateFeedComponent } from './create-update-feed/create-update-feed.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { getMainDefinition } from '@apollo/client/utilities';
+import { getMainDefinition, offsetLimitPagination } from '@apollo/client/utilities';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 import { Kind, OperationTypeNode } from 'graphql';
@@ -75,7 +75,16 @@ import { CreateUpdateSessionComponent } from './create-update-session/create-upd
 
         return {
           link,
-          cache: new InMemoryCache(),
+          cache: new InMemoryCache({
+            // typePolicies:{
+            //   Query:{
+            //     fields:{
+            //       events:offsetLimitPagination(),
+            //     }
+
+            //   }
+            // }
+          }),
           // ... Options
         };
       },

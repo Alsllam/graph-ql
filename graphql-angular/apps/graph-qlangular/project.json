@@ -20,6 +20,7 @@
           "apps/graph-qlangular/src/assets"
         ],
         "styles": [
+          "node_modules/@swimlane/ngx-datatable/assets/icons.css",
           "node_modules/@swimlane/ngx-datatable/themes/material.css",
           "node_modules/bootstrap/dist/css/bootstrap.min.css",
           "apps/graph-qlangular/src/styles.scss"

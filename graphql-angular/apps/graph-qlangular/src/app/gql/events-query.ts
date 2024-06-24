@@ -1,8 +1,8 @@
 import { gql } from 'apollo-angular';
 
 export const GET_EVENTS = gql`
-  query {
-    events {
+  query getEvent($filterNeedle: String!, $skip: Int!, $take: Int!){
+    events(filterNeedle:$filterNeedle , skip:$skip ,take:$take){
         total
         items{
             id
@@ -14,8 +14,8 @@ export const GET_EVENTS = gql`
 `;
 
 export const GET_EVENTS_DETAILS = gql`
-  query {
-    events {
+  query getEventDetails($filterNeedle: String!, $skip: Int!, $take: Int!){
+    events(filterNeedle:$filterNeedle , skip:$skip ,take:$take) {
         total
         items{
             id
@@ -27,8 +27,8 @@ export const GET_EVENTS_DETAILS = gql`
 }
 `;
 export const GET_EVENTS_SESSIONS = gql`
-query {
-    events {
+query getEventSessions($filterNeedle: String!, $skip: Int!, $take: Int!){
+  events(filterNeedle:$filterNeedle , skip:$skip ,take:$take){
         total
         items{
             id
@@ -45,9 +45,9 @@ query {
   }
 }
 `;
-export const GET_EVENTS_SESSIONS_ATENDEES = gql`
-query {
-    events {
+export const GET_EVENTS_ATENDEES = gql`
+query getEventAtendees($filterNeedle: String!, $skip: Int!, $take: Int!){
+  events(filterNeedle:$filterNeedle , skip:$skip ,take:$take) {
         total
         items{
             id

@@ -1,15 +1,28 @@
 <div class="container-fluid">
-    <span>View Events List</span>
-    <div class="actions">
+    <span class="w-100 d-flex justify-content-center mt-3"><strong>View Events List</strong></span>
+    <div class="d-flex justify-content-between">
+        <div class="my-3">
+            <span><strong>Display options</strong></span>
+            <div class="mt-2">
+                <input type="checkbox" [(ngModel)]="haveDetails" (change)="displayDetails($event)"> Display Details
+                <input type="checkbox" [(ngModel)]="haveSessions" class="mx-2" (change)="displaySessions($event)"> Display Sessions
+                <input type="checkbox" [(ngModel)]="haveAtendees" (change)="displayAttendees($event)"> Display Attendees
+            </div>
+        </div>
+    </div>
+    <div class="my-2">
+        <span><strong>Update options</strong></span>
+        <div class="mt-2">
+            <button class="btn btn-warning"  (click)="Polling()">{{isPolling?'Cancel Update': 'Update Every 0.5s'}} </button>
+            <button class="btn btn-info mx-2" (click)="refresh()">Update Now</button>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end w-100 mb-2">
         <button class="view-details btn-success btn mt-3" [routerLink]="['/create']">Create New Event</button>
     </div>
-    <div class="more-data my-3">
-        <input type="checkbox" [(ngModel)]="haveDetails" (change)="displayDetails($event)"> Display Details
-        <input type="checkbox" [(ngModel)]="haveSessions" class="mx-2" (change)="displaySessions($event)"> Display Sessions
-        <input type="checkbox" [(ngModel)]="haveAtendees" (change)="displayAttendees($event)"> Display Attendees
-    </div>
     <div class="card">
-        <ngx-datatable class="material expandable" [rows]="rows" #myTable>
+        <ngx-datatable class="material expandable" [rows]="rows" [count]="totalCount" [limit]="10" [footerHeight]="50" #myTable
+        [externalPaging]="true"   (page)="setPage($event)">
             <ngx-datatable-column [width]="200" [name]="'ID'" prop="id"></ngx-datatable-column>
             <ngx-datatable-column [width]="350" [name]="'Title'" prop="body"></ngx-datatable-column>
             <ngx-datatable-column [width]="300" [name]="'Date'" prop="date"></ngx-datatable-column>
@@ -30,14 +43,14 @@
                     <button class="view-details btn btn-primary btn-sm" (click)="createSession(row?.id)">Create Session</button>
                 </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column [width]="150" [resizeable]="false" [sortable]="false" [draggable]="false"
+            <ngx-datatable-column *ngIf="haveAtendees || haveSessions" [width]="250" [resizeable]="false" [sortable]="false" [draggable]="false"
                 [canAutoResize]="false">
                 <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
-                    <button class="btn btn-secondary" (click)="toggleExpandRow(row)">expand</button>
+                    <button class="btn btn-secondary" (click)="toggleExpandRow(row)">Show More Details</button>
                 </ng-template>
             </ngx-datatable-column>
             <!-- Row Detail Template -->
-            <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
+            <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow >
                 <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
                     <div class="d-flex flex-column" *ngIf="row.sessions && haveSessions">
                         <span class="mb-2"><strong>Available Sessions</strong></span>
@@ -76,4 +89,8 @@
 
         </ngx-datatable>
     </div>
+    <!-- <div class="w-100 d-flex justify-content-between mt-3">
+        <button class="btn btn-danger" (click)="previous()" [disabled]="skip<10">Previous</button>
+        <button class="btn btn-success" (click)="next()">Next</button>
+    </div> -->
 </div>
