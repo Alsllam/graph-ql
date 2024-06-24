@@ -4,9 +4,9 @@
         <button class="view-details btn-success btn mt-3" [routerLink]="['/create']">Create New Event</button>
     </div>
     <div class="more-data my-3">
-        <input type="checkbox" (change)="displayDetails($event)"> Display Details
-        <input type="checkbox" class="mx-2" (change)="displayDetails($event)"> Display Sessions
-        <input type="checkbox"> Display Attendees
+        <input type="checkbox" [(ngModel)]="haveDetails" (change)="displayDetails($event)"> Display Details
+        <input type="checkbox" [(ngModel)]="haveSessions" class="mx-2" (change)="displaySessions($event)"> Display Sessions
+        <input type="checkbox" [(ngModel)]="haveAtendees" (change)="displayAttendees($event)"> Display Attendees
     </div>
     <div class="card">
         <ngx-datatable class="material expandable" [rows]="rows" #myTable>
@@ -25,7 +25,7 @@
                     <button class="view-details btn btn-primary btn-sm" (click)="update(row?.id)">Edit Event</button>
                 </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column [width]="150" [resizeable]="false" [sortable]="false" [draggable]="false"
+            <ngx-datatable-column [width]="150" *ngIf="haveSessions || haveAtendees" [resizeable]="false" [sortable]="false" [draggable]="false"
                 [canAutoResize]="false">
                 <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
                     <button class="btn btn-secondary" (click)="toggleExpandRow(row)">expand</button>
@@ -34,9 +34,39 @@
             <!-- Row Detail Template -->
             <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
                 <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
-                    <div style="padding-left:35px;">
-                        <div><strong>Address</strong></div>
-                        <div>test</div>
+                    <div *ngIf="row.sessions && haveSessions">
+                        <span class="mb-2"><strong>Available Sessions</strong></span>
+                        <div class="details" *ngFor="let session of row.sessions">
+                            <div class="d-flex flex-column">
+                                <span><strong>title</strong></span>
+                                <span>{{session.title}}</span>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <span><strong>Start Time</strong></span>
+                                <span>{{session.startTime}}</span>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <span><strong>End Time</strong></span>
+                                <span>{{session.endTime}}</span>
+                            </div>
+                        </div>
+                        <span *ngIf="!row.sessions.length&& haveSessions">There is No Sessions</span>
+                    </div>
+                    <span class="mb-2"><strong>Attendees</strong></span>
+                    <div  *ngIf="row.sessions && haveAtendees">
+                        <div *ngFor="let attendees of row.sessions">
+                            <div  class="details" *ngFor="let attendee of attendees.attendees ">
+                                <div class="d-flex flex-column">
+                                    <span><strong>name</strong></span>
+                                    <span>{{attendee.name}}</span>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <span><strong>Email</strong></span>
+                                    <span>{{attendee.email}}</span>
+                                </div>
+                                <span *ngIf=" !attendee || !attendees">There is No Attendees</span>
+                            </div>
+                        </div>
                     </div>
                 </ng-template>
             </ngx-datatable-row-detail> 

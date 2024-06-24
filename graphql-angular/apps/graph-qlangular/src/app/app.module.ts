@@ -13,7 +13,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FeedDetailsComponent } from './feed-details/feed-details.component';
 import { CreateUpdateFeedComponent } from './create-update-feed/create-update-feed.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
@@ -36,6 +36,7 @@ import { EventListComponent } from './event-list/event-list.component';
     ApolloModule,
     ReactiveFormsModule,
     NgxDatatableModule,
+    FormsModule
   ],
   providers: [
     {
