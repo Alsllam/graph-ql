@@ -1,4 +1,14 @@
 :host ::ng-deep{
+    .details{
+        padding-left: 35px;
+        display: flex;
+        gap: 75px;
+        margin-bottom: 15px;
+        &:not(:last-child){
+            // border-bottom: unset;
+            border-bottom: 1px solid #8080804a;
+        }
+    }
     .ngx-datatable.material {
         padding-bottom: 16px;
     }
@@ -18,5 +28,8 @@
     }
     .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group{
         background-color: unset !important;
+    }
+    .datatable-row-detail{
+        height: auto !important;
     }
 }
