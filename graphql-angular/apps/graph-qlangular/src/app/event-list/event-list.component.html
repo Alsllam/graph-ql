@@ -6,7 +6,7 @@
                 <input type="text" class="search" [(ngModel)]="filterText">
                 <button class="btn btn-primary mx-2 " (click)="search()">Search</button>
             </div>
-            <button class="view-details btn-success btn mt-2" [routerLink]="['/event/create']">Create New Event</button>
+            <button class="view-details btn-success btn mt-2" [routerLink]="['/create']">Create New Event</button>
         </div>
         <ngx-datatable class="material expandable" [columnMode]="'flex'" 
          [rowHeight]="50" [rows]="rows" [count]="totalCount" [limit]="10" [footerHeight]="50" #myTable
@@ -18,7 +18,7 @@
                 {{row.date | date}}
             </ng-template>
         </ngx-datatable-column>
-            <ngx-datatable-column *ngIf="haveDetails" [flexGrow]="4" [name]="'Details'" [sortable]="false"
+            <ngx-datatable-column *ngIf="haveDetails" [flexGrow]="3" cellClass="event-details" [name]="'Details'" [sortable]="false"
                 prop="details" ></ngx-datatable-column>
             <!-- <ngx-datatable-column [flexGrow]="1" >
                 <ng-template let-row="row" ngx-datatable-cell-template>

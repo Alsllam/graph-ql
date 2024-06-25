@@ -52,6 +52,18 @@
     .datatable-header-cell-template-wrap {
         font-size: 16px;
     }
+    .event-details{
+        white-space: pre-wrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important; /* number of lines to show */
+                line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+    }
+    .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell, .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-group-cell{
+        white-space: pre-wrap !important;
+    }
     datatable-body-row{
         height: 55px !important;
     }
