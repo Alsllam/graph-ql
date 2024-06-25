@@ -108,7 +108,7 @@ export class EventListComponent implements OnInit, OnDestroy {
   public Polling(){
     this.isPolling = !this.isPolling;
    if(this.isPolling){
-     this.eventsQuery.startPolling(500);
+     this.eventsQuery.startPolling(1000);
     }else{
      this.eventsQuery.stopPolling();
    }
