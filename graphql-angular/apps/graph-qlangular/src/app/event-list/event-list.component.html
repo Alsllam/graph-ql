@@ -1,20 +1,20 @@
 <h3 class="w-100 d-flex justify-content-center my-3">View Events List</h3>
 <div class="layout">
-    <div class="card col-10">
+    <div class="card col-10 mx-3">
         <div class="d-flex justify-content-between w-100 mb-3">
-            <button class="view-details btn-success btn mt-2" [routerLink]="['/create']">Create New Event</button>
             <div class="mt-2">
-                <button class="btn btn-primary mx-2 " (click)="search()">Search</button>
                 <input type="text" class="search" [(ngModel)]="filterText">
+                <button class="btn btn-primary mx-2 " (click)="search()">Search</button>
             </div>
+            <button class="view-details btn-success btn mt-2" [routerLink]="['/create']">Create New Event</button>
         </div>
         <ngx-datatable class="material expandable" [rows]="rows" [count]="totalCount" [limit]="10" [footerHeight]="50" #myTable
         [externalPaging]="true"   (page)="setPage($event)">
-            <ngx-datatable-column [width]="200" [name]="'ID'" prop="id" [resizeable]="false" [sortable]="false" [draggable]="false"
+            <ngx-datatable-column [width]="150" [name]="'ID'" prop="id" [resizeable]="false" [sortable]="false" [draggable]="false"
             [canAutoResize]="false"></ngx-datatable-column>
-            <ngx-datatable-column [width]="350" [name]="'Title'" prop="body" [resizeable]="false" [sortable]="false" [draggable]="false"
+            <ngx-datatable-column [width]="200" [name]="'Title'" prop="body" [resizeable]="false" [sortable]="false" [draggable]="false"
             [canAutoResize]="false"></ngx-datatable-column>
-            <ngx-datatable-column [width]="300" [name]="'Date'" prop="date" [resizeable]="false" [sortable]="false" [draggable]="false"
+            <ngx-datatable-column [width]="200" [name]="'Date'" prop="date" [resizeable]="false" [sortable]="false" [draggable]="false"
             [canAutoResize]="false"></ngx-datatable-column>
             <ngx-datatable-column *ngIf="haveDetails" [width]="300" [name]="'Details'"
                 prop="details" [resizeable]="false" [sortable]="false" [draggable]="false"
@@ -39,7 +39,7 @@
             <ngx-datatable-column *ngIf="haveAtendees || haveSessions" [width]="250" [resizeable]="false" [sortable]="false" [draggable]="false"
                 [canAutoResize]="false">
                 <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
-                    <button class="btn btn-secondary" (click)="toggleExpandRow(row)" *ngIf="haveAtendees">Show Atendees</button>
+                    <button class="btn btn-secondary" (click)="toggleExpandRow(row)" *ngIf="haveAtendees">Show Attendees</button>
                     <button class="btn btn-secondary" (click)="toggleExpandRow(row)" *ngIf="haveSessions">Show Sessions</button>
                 </ng-template>
             </ngx-datatable-column>
@@ -127,9 +127,9 @@
         </div>
         <div class="my-2">
             <span class="mx-2"><strong>Update options</strong></span>
-            <div class="mt-2 mx-3">
+            <div class="mt-2 update-options">
                 <button class="btn btn-warning"  (click)="Polling()">{{isPolling?'Cancel Update': 'Update Every 0.5s'}} </button>
-                <button class="btn btn-info mx-2" (click)="refresh()">Update Now</button>
+                <button class="btn btn-info" (click)="refresh()">Update Now</button>
             </div>
         </div>
     </div>

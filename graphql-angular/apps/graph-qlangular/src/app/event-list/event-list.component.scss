@@ -19,6 +19,13 @@
         border: 1px solid #8080804a;
         outline: unset;
         border-radius: 15px;
+        padding: 10px;
+    }
+    .update-options{
+        gap: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 10px;
     }
     .graph-options{
         display: flex;
