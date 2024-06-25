@@ -75,6 +75,11 @@
   dependencies:
     tslib "^2.5.2"
 
+"@graphql-yoga/plugin-apq@^3.3.1":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@graphql-yoga/plugin-apq/-/plugin-apq-3.4.0.tgz#95d72e32ca92e930c815e52730c2db90b19b170d"
+  integrity sha512-GywEYCVb67DY3zWE8X9mkQ1wDUD2h/eMgesDRfccUH3VN12dTkVV8z2+Oyxtb4DoKHi1inwdbW6gdm6rttLyQg==
+
 "@graphql-yoga/subscription@^5.0.0":
   version "5.0.0"
   resolved "https://registry.npmjs.org/@graphql-yoga/subscription/-/subscription-5.0.0.tgz"

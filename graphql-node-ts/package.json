@@ -25,6 +25,7 @@
     "graphql": "16.6.0",
     "graphql-ws": "^5.16.0",
     "graphql-yoga": "5.x.x",
-    "ws": "^8.17.1"
+    "ws": "^8.17.1",
+    "@graphql-yoga/plugin-apq": "^3.3.1"
   }
 }

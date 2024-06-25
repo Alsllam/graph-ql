@@ -4,9 +4,10 @@ import { createContext } from './context'
 import { schema } from './event-schema'
 import { WebSocketServer } from 'ws'
 import { useServer } from 'graphql-ws/lib/use/ws'
+import { useAPQ } from '@graphql-yoga/plugin-apq'
 
 function main() {
-    const yoga = createYoga({ schema, context: createContext,  batching: { limit: 1000} })
+    const yoga = createYoga({ schema, context: createContext,  batching: { limit: 1000},  plugins: [useAPQ()] })
     const server = createServer(yoga)
     server.listen(4000, () => {
         console.info('Server is running on http://localhost:4000/graphql')
