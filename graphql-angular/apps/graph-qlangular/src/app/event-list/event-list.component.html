@@ -14,8 +14,12 @@
             [canAutoResize]="false"></ngx-datatable-column>
             <ngx-datatable-column [width]="200" [name]="'Title'" prop="body" [resizeable]="false" [sortable]="false" [draggable]="false"
             [canAutoResize]="false"></ngx-datatable-column>
-            <ngx-datatable-column [width]="200" [name]="'Date'" prop="date" [resizeable]="false" [sortable]="false" [draggable]="false"
-            [canAutoResize]="false"></ngx-datatable-column>
+            <ngx-datatable-column [width]="200" [name]="'Date'" [resizeable]="false" [sortable]="false" [draggable]="false"
+            [canAutoResize]="false">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.date | date}}
+            </ng-template>
+        </ngx-datatable-column>
             <ngx-datatable-column *ngIf="haveDetails" [width]="300" [name]="'Details'"
                 prop="details" [resizeable]="false" [sortable]="false" [draggable]="false"
                 [canAutoResize]="false"></ngx-datatable-column>
@@ -55,11 +59,11 @@
                             </div>
                             <div class="d-flex flex-column">
                                 <span><strong>Start Time</strong></span>
-                                <span>{{session.startTime}}</span>
+                                <span>{{session.startTime| date}}</span>
                             </div>
                             <div class="d-flex flex-column">
                                 <span><strong>End Time</strong></span>
-                                <span>{{session.endTime}}</span>
+                                <span>{{session.endTime| date}}</span>
                             </div>
                         </div>
                         <span *ngIf="!row.sessions.length&& haveSessions">There is No Sessions</span>
