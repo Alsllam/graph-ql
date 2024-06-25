@@ -26,7 +26,7 @@ export class EventListComponent implements OnInit, OnDestroy {
   networkOnly:string;
   noCache:string;
   standby:string;
-  fetchPolicy:WatchQueryFetchPolicy;
+  fetchPolicy:WatchQueryFetchPolicy = 'cache-first';
   isPolling = false;
   eventsQuery: QueryRef<any>;
   skip = 0;
@@ -40,6 +40,7 @@ export class EventListComponent implements OnInit, OnDestroy {
       .watchQuery<any>({
         query: GET_EVENTS,
         variables:{filterNeedle:'', skip:this.skip, take:10},
+        fetchPolicy: this.fetchPolicy
       })
     this.eventsQuery.valueChanges.subscribe((res: any) => {
       this.rows = res?.data.events.items;
@@ -163,15 +164,11 @@ export class EventListComponent implements OnInit, OnDestroy {
       filterNeedle:'',
       take: pageInfo.limit
     })
-    this.eventsQuery.setOptions({
-      fetchPolicy: this.fetchPolicy
-    })
+
   }
   getSelectedNetwork(event:any){
     this.fetchPolicy = event.target.value;
-    this.eventsQuery.setOptions({
-      fetchPolicy: this.fetchPolicy
-    })
+    this.getData()
   }
   search(){
     this.eventsQuery.setVariables({

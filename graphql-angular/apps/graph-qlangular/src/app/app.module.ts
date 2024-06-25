@@ -23,6 +23,8 @@ import { EventListComponent } from './event-list/event-list.component';
 import { CreateUpdateEventComponent } from './create-update-event/create-update-event.component';
 import { CreateUpdateSessionComponent } from './create-update-session/create-update-session.component';
 import { SessionComponent } from './session/session.component';
+import { createPersistedQueryLink } from 'apollo-angular/persisted-queries';
+import { sha256 } from 'crypto-hash';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +55,8 @@ import { SessionComponent } from './session/session.component';
           uri: 'http://localhost:4000/graphql',
           batchMax: 1000,
         });
+        // hashing query
+        const persistedHttp = createPersistedQueryLink({sha256}).concat(http);
 
         // Create a WebSocket link:
         const ws = new GraphQLWsLink(
@@ -73,9 +77,10 @@ import { SessionComponent } from './session/session.component';
             );
           },
           ws,
+          // persistedHttp
           http
         );
-
+        
         return {
           link,
           cache: new InMemoryCache({
@@ -97,4 +102,6 @@ import { SessionComponent } from './session/session.component';
 
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+
+}
