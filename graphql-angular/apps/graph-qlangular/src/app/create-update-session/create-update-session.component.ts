@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
@@ -51,29 +45,18 @@ export class CreateUpdateSessionComponent implements OnInit {
           title: this.session.title,
           sDate: `${startDate.getFullYear()}-${transform(
             startDate.getMonth()
-          )}-${transform(startDate.getDate())}`,
+          )}-${transform(startDate.getDate())}T${transform(
+            startDate.getHours()
+          )}:${transform(startDate.getMinutes())}`,
           eDate: `${endDate.getFullYear()}-${transform(
             endDate.getMonth()
-          )}-${transform(endDate.getDate())}`,
+          )}-${transform(endDate.getDate())}T${transform(
+            endDate.getHours()
+          )}:${transform(endDate.getMinutes())}`,
         });
       }
       return;
     }
-
-    // this.isUpdateMode = this.route.snapshot.data['mode'] === 'update';
-    // if (this.isUpdateMode) {
-    //   // this.route.paramMap.subscribe((params) => {
-    //   //   this.sessionId = Number(params.get('id'));
-    //   //   console.log('sessionId', this.sessionId);
-    //   // });
-    // } else {
-    //   this.route.paramMap.subscribe((params) => {
-    //     this.eventId = Number(params.get('id'));
-    //     console.log('eventId', this.eventId);
-    //   });
-    // }
-
-    // this.initForm();
   }
 
   initForm() {
@@ -96,14 +79,11 @@ export class CreateUpdateSessionComponent implements OnInit {
         },
       })
       .subscribe(({ data, errors }) => {
-        console.log(data);
+        if (data) {
+          this.router.navigate(['/']);
+        }
       });
   }
-
-  // ngOnChanges(changes: SimpleChanges): void {
-  // console.log(this.sessions);
-  // console.log(this.sessions);
-  // }
 
   getSessionById() {
     this.apollo

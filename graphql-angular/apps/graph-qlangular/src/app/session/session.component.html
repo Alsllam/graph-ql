@@ -27,17 +27,22 @@
       <div class="col-4">
         <div>
           <label for="sDate" class="form-label">Start date</label>
-          <input type="date" class="form-control" formControlName="sDate" id="sDate">
+          <input type="datetime-local" class="form-control" formControlName="sDate" id="sDate">
         </div>
       </div>
       <div class="col-4">
         <div>
           <label for="eDate" class="form-label">End date</label>
-          <input type="date" class="form-control" formControlName="eDate" id="eDate">
+          <input type="datetime-local" class="form-control" formControlName="eDate" id="eDate">
         </div>
       </div>
       <div class="col-12">
         <hr />
+      </div>
+      <div class="col-12">
+        <button type="button" class="btn btn-primary" (click)="initAttendanceForm()" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        data-bs-whatever="@mdo">Register Attendance</button>
+
       </div>
       <div class="col-6">
         <div class="mt-4 bg-white border rounded p-3" style="min-height: 500px;">
@@ -46,8 +51,6 @@
             <li *ngFor="let attendance of attendees">{{attendance.name}}</li>
           </ul>
           <!-- <button class="btn btn-success" (click)="onRegister()">Register Attendance</button> -->
-          <button type="button" class="btn btn-primary" (click)="initAttendanceForm()" data-bs-toggle="modal" data-bs-target="#exampleModal"
-            data-bs-whatever="@mdo">Register Attendance</button>
 
         </div>
       </div>

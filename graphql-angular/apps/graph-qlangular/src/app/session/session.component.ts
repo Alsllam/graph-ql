@@ -82,12 +82,8 @@ export class SessionComponent implements OnInit {
           eventBody: session.event.body,
           eventDetails: session.event.details,
           title: session.title,
-          sDate: `${startDate.getFullYear()}-${transform(
-            startDate.getMonth()
-          )}-${transform(startDate.getDate())}`,
-          eDate: `${endDate.getFullYear()}-${transform(
-            endDate.getMonth()
-          )}-${transform(endDate.getDate())}`,
+          sDate: `${startDate.getFullYear()}-${transform(startDate.getMonth())}-${transform(startDate.getDate())}T${transform(startDate.getHours())}:${transform(startDate.getMinutes())}`,
+          eDate: `${endDate.getFullYear()}-${transform(endDate.getMonth())}-${transform(endDate.getDate())}T${transform(endDate.getHours())}:${transform(endDate.getMinutes())}`,
         });
         this.getEventState(session.event?.id);
       });

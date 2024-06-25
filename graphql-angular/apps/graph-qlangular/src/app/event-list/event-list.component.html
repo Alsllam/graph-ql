@@ -6,7 +6,7 @@
                 <input type="text" class="search" [(ngModel)]="filterText">
                 <button class="btn btn-primary mx-2 " (click)="search()">Search</button>
             </div>
-            <button class="view-details btn-success btn mt-2" [routerLink]="['/create']">Create New Event</button>
+            <button class="view-details btn-success btn mt-2" [routerLink]="['/event/create']">Create New Event</button>
         </div>
         <ngx-datatable class="material expandable" [rows]="rows" [count]="totalCount" [limit]="10" [footerHeight]="50" #myTable
         [externalPaging]="true"   (page)="setPage($event)">
