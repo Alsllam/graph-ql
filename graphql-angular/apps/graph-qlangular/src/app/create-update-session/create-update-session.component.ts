@@ -1,18 +1,36 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
-import { CREATE_SESSION } from '../gql/events-mutations';
+import { CREATE_SESSION, UPDATE_SESSION } from '../gql/events-mutations';
+import { SESSION_BY_ID } from '../gql/events-query';
+
+const transform = (value: number, digits: number = 2): string => {
+  let paddedNumber = value.toString();
+  while (paddedNumber.length < digits) {
+    paddedNumber = '0' + paddedNumber;
+  }
+  return paddedNumber;
+};
 
 @Component({
   selector: 'graphql-angular-create-update-session',
   templateUrl: './create-update-session.component.html',
   styleUrls: ['./create-update-session.component.scss'],
 })
-export class CreateUpdateSessionComponent {
-  form: FormGroup;
-  isUpdateMode: boolean;
-  eventId: number;
+export class CreateUpdateSessionComponent implements OnInit {
+  public form: FormGroup;
+  isUpdateMode = false;
+  @Input() eventId: number;
+  sessionId: number;
+  @Input() isComponent = false;
+  @Input() session: any;
   constructor(
     private apollo: Apollo,
     private formBuilder: FormBuilder,
@@ -21,11 +39,41 @@ export class CreateUpdateSessionComponent {
   ) {}
 
   ngOnInit(): void {
-    this.isUpdateMode = this.route.snapshot.data['mode'] === 'update';
-    this.route.paramMap.subscribe((params) => {
-      this.eventId = Number(params.get('id'));
-    });
-    this.initForm();
+    if (this.isComponent) {
+      this.initForm();
+      this.isUpdateMode = this.session?.id > 0;
+      this.sessionId = this.session?.id;
+      if (this.session?.id) {
+        const startDate = new Date(+this.session.startTime);
+        const endDate = new Date(+this.session.endTime);
+        // console.log(`${startDate.getMonth()}-${startDate.getDate()}-${startDate.getFullYear()}`);
+        this.form.patchValue({
+          title: this.session.title,
+          sDate: `${startDate.getFullYear()}-${transform(
+            startDate.getMonth()
+          )}-${transform(startDate.getDate())}`,
+          eDate: `${endDate.getFullYear()}-${transform(
+            endDate.getMonth()
+          )}-${transform(endDate.getDate())}`,
+        });
+      }
+      return;
+    }
+
+    // this.isUpdateMode = this.route.snapshot.data['mode'] === 'update';
+    // if (this.isUpdateMode) {
+    //   // this.route.paramMap.subscribe((params) => {
+    //   //   this.sessionId = Number(params.get('id'));
+    //   //   console.log('sessionId', this.sessionId);
+    //   // });
+    // } else {
+    //   this.route.paramMap.subscribe((params) => {
+    //     this.eventId = Number(params.get('id'));
+    //     console.log('eventId', this.eventId);
+    //   });
+    // }
+
+    // this.initForm();
   }
 
   initForm() {
@@ -52,9 +100,43 @@ export class CreateUpdateSessionComponent {
       });
   }
 
+  // ngOnChanges(changes: SimpleChanges): void {
+  // console.log(this.sessions);
+  // console.log(this.sessions);
+  // }
+
+  getSessionById() {
+    this.apollo
+      .watchQuery({
+        query: SESSION_BY_ID,
+        variables: {
+          id: this.sessionId,
+        },
+      })
+      .valueChanges.subscribe((data: any) => {
+        console.log(data);
+      });
+  }
+
+  updateSession() {
+    this.apollo
+      .mutate({
+        mutation: UPDATE_SESSION,
+        variables: {
+          id: this.sessionId,
+          title: this.form.controls['title'].value,
+          startTime: this.form.controls['sDate'].value,
+          endTime: this.form.controls['eDate'].value,
+        },
+      })
+      .subscribe(({ data, errors }) => {
+        console.log(data);
+      });
+  }
+
   onSubmit() {
     if (this.isUpdateMode) {
-      console.log('update');
+      this.updateSession();
     } else {
       this.createSession();
     }

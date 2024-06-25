@@ -1,20 +1,35 @@
 import { Apollo } from 'apollo-angular';
-import { Component, OnInit } from '@angular/core';
-import { CREATE_Event, UPDATE_Event } from '../gql/events-mutations';
+import { Component, OnInit, ViewChildren } from '@angular/core';
+import {
+  CREATE_Event,
+  CREATE_SESSION,
+  DELETE_SESSION,
+  UPDATE_Event,
+} from '../gql/events-mutations';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FEED_SUBSCRIBE } from '../gql/feeds-mutations';
 import { EVENT_BY_ID } from '../gql/events-query';
+import { CreateUpdateSessionComponent } from '../create-update-session/create-update-session.component';
 
+const transform = (value: number, digits: number = 2): string => {
+  let paddedNumber = value.toString();
+  while (paddedNumber.length < digits) {
+    paddedNumber = '0' + paddedNumber;
+  }
+  return paddedNumber;
+};
 @Component({
   selector: 'graphql-angular-create-update-event',
   templateUrl: './create-update-event.component.html',
   styleUrls: ['./create-update-event.component.scss'],
 })
 export class CreateUpdateEventComponent implements OnInit {
+  @ViewChildren('session') sessionForms: CreateUpdateSessionComponent[];
   form: FormGroup;
   isUpdateMode: boolean;
   eventId: number;
+  sessions: any[] = [];
+  deletedItems: any[] = [];
 
   constructor(
     private apollo: Apollo,
@@ -53,11 +68,15 @@ export class CreateUpdateEventComponent implements OnInit {
       })
       .valueChanges.subscribe((data: any) => {
         if (data.data) {
-          console.log(data);
+          this.sessions = [...data.data?.event?.sessions];
+          console.log(this.sessions);
           const event = data?.data.event;
+          const date = new Date(+event.date);
           this.form.patchValue({
             name: event.body,
-            date: event.date,
+            date: `${date.getFullYear()}-${transform(
+              date.getMonth()
+            )}-${transform(date.getDate())}`,
             details: event.details,
           });
         }
@@ -76,6 +95,11 @@ export class CreateUpdateEventComponent implements OnInit {
       })
       .subscribe(({ data, errors }) => {
         console.log(data);
+        this.eventId = (data as any).createEvent.id;
+        this.sessions.forEach(item => item.eventId =  this.eventId);
+        setTimeout(() => {
+          this.submitSessionForms();
+        }, 100);
       });
   }
 
@@ -98,17 +122,41 @@ export class CreateUpdateEventComponent implements OnInit {
             console.log(errors[0].originalError?.message);
           }
         });
+      this.submitSessionForms();
     } else {
       this.createEvent();
-      // this.apollo
-      //   .subscribe({
-      //     query: FEED_SUBSCRIBE,
-      //   })
-      //   .subscribe((result) => {
-      //     if (result) {
-      //       console.log('Inserted data:', result.data);
-      //     }
-      //   });
     }
+  }
+
+  submitSessionForms() {
+    this.sessionForms.forEach((item) => item.onSubmit());
+    //OnSubmit Array Delete Session BY ID
+    this.deletedItems.forEach((sessionId) =>
+      this._deleteSessionById(sessionId)
+    );
+  }
+  addSession() {
+    this.sessions.push({});
+  }
+  deleteSession(sessionIndex: number, sessionId: number) {
+    //array Deleted Session IDs - push   [10, 49]
+    if(sessionId){
+      this.deletedItems.push(sessionId);
+    }
+    this.sessions.splice(sessionIndex, 1);
+  }
+  private _deleteSessionById(sessionId: number) {
+    this.apollo
+      .mutate({
+        mutation: DELETE_SESSION,
+        variables: {
+          id: sessionId,
+        },
+      })
+      .subscribe((data) => console.log(data));
+  }
+
+  startSession(id: number){
+    this.router.navigate(['session', id]);
   }
 }

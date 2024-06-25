@@ -75,7 +75,7 @@ export class EventListComponent implements OnInit, OnDestroy {
       .watchQuery<any>({
         query: GET_EVENTS_SESSIONS,
         variables:{filterNeedle:'', skip:this.skip, take:10},
-        
+
       })
       .valueChanges.subscribe((res: any) => {
         this.rows = res?.data.events.items;
@@ -89,7 +89,7 @@ export class EventListComponent implements OnInit, OnDestroy {
     this.skip = this.skip +10;
     this.eventsQuery.setVariables({
       skip: this.skip,
-      filterNeedle:'', 
+      filterNeedle:'',
       take:10
     })
     // this.eventsQuery.fetchMore({
@@ -140,13 +140,16 @@ export class EventListComponent implements OnInit, OnDestroy {
     this.table.rowDetail.toggleExpandRow(row);
   }
   viewDetails(id: number) {
-    this.router.navigate([`feed/view/${id}`]);
+    this.router.navigate([`event/view/${id}`]);
   }
   update(id: number) {
-    this.router.navigate([`feed/update/${id}`]);
+    this.router.navigate([`event/update/${id}`]);
   }
   createSession(id: number) {
     this.router.navigate([`session/create/${id}`]);
+  }
+  updateSession(id: number){
+    this.router.navigate([`session/update/${id}`]);
   }
   ngOnDestroy(): void {
     this.sub$?.unsubscribe();
@@ -157,7 +160,7 @@ export class EventListComponent implements OnInit, OnDestroy {
     this.haveDetails = false;
     this.eventsQuery.setVariables({
       skip: pageInfo.offset * pageInfo.limit,
-      filterNeedle:'', 
+      filterNeedle:'',
       take: pageInfo.limit
     })
     this.eventsQuery.setOptions({
@@ -173,7 +176,7 @@ export class EventListComponent implements OnInit, OnDestroy {
   search(){
     this.eventsQuery.setVariables({
       skip: this.skip,
-      filterNeedle:this.filterText, 
+      filterNeedle:this.filterText,
       take:10
     })
   }

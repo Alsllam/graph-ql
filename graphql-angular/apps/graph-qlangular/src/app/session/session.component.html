@@ -1,0 +1,30 @@
+<div class="card p-5 m-5 w-50 mx-auto border-0 shadow-sm bg-light">
+  <p><strong>Start Session.</strong></p>
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-12">
+        <div>
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" formControlName="title" id="title">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mt-4">
+          <label for="sDate" class="form-label">Start date</label>
+          <input type="date" class="form-control" formControlName="sDate" id="sDate">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mt-4">
+          <label for="eDate" class="form-label">End date</label>
+          <input type="date" class="form-control" formControlName="eDate" id="eDate">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mt-4 bg-white border rounded p-3" style="min-height: 500px;">
+          <p><strong>Attendance List</strong></p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -55,3 +55,33 @@ export const CREATE_SESSION = gql`
     }
   }
 `;
+
+export const UPDATE_SESSION = gql`
+  mutation UpdateSession(
+    $id: ID!
+    $title: String
+    $startTime: String
+    $endTime: String
+  ) {
+    updateSession(
+      id: $id
+      title: $title
+      startTime: $startTime
+      endTime: $endTime
+    ) {
+      title
+      startTime
+      endTime
+    }
+  }
+`;
+
+export const DELETE_SESSION = gql`
+  mutation DeleteSession($id: ID!) {
+    deleteSession(id: $id) {
+      title
+      startTime
+      endTime
+    }
+  }
+`;

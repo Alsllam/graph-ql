@@ -2,14 +2,9 @@ import { Apollo } from 'apollo-angular';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FeedState, Feeds } from '../feeds';
-import {
-  CREATE_Feed,
-  FEED_SUBSCRIBE,
-  UPDATE_Feed,
-} from '../gql/feeds-mutations';
+import { Feeds } from '../feeds';
+import { CREATE_Feed, UPDATE_Feed } from '../gql/feeds-mutations';
 import { FEED_ById } from '../gql/feeds-query';
-import { GraphQLError } from 'graphql';
 
 @Component({
   selector: 'graphql-angular-create-update-feed',
@@ -79,34 +74,6 @@ export class CreateUpdateFeedComponent implements OnInit {
             data?.errors[0].extensions?.originalError?.message;
         }
       });
-  }
-
-  getFeedState() {
-    return this.apollo
-      .subscribe({
-        query: FEED_SUBSCRIBE,
-      })
-      .subscribe((result) => {
-        if (result) {
-          console.log('New data:', result);
-        }
-      });
-  }
-
-  updateFeedsState(feeds: Feeds[], feedState: FeedState) {
-    const newFeeds = feeds.map((todo) => todo);
-    const feedIndex = newFeeds.findIndex(
-      (feed) => feed.id === feedState.data.id
-    );
-    switch (feedState.mutation) {
-      case 'CREATED':
-        newFeeds.unshift(feedState.data);
-        return newFeeds;
-      case 'UPDATED':
-        newFeeds[feedIndex] = feedState.data;
-        return newFeeds;
-    }
-    return newFeeds;
   }
 
   onSubmit() {

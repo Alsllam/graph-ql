@@ -36,10 +36,11 @@ query getEventSessions($filterNeedle: String!, $skip: Int!, $take: Int!){
             date
             details
             sessions{
+                id
                 title
                 startTime
                 endTime
-    
+
             }
         }
   }
@@ -73,6 +74,57 @@ export const EVENT_BY_ID = gql`
       sessions {
         id
         title
+        startTime
+        endTime
+      }
+    }
+  }
+`;
+
+export const SESSION_BY_ID = gql`
+  query GetSessionById($id: ID!) {
+    session(id: $id) {
+      title
+      startTime
+      endTime
+    }
+  }
+`;
+
+export const SESSION = gql`
+query Session($id: ID!) {
+  session(id: $id) {
+    id
+    title
+    event {
+      id
+      body
+      sessions {
+        title
+        startTime
+        endTime
+      }
+    }
+    attendees{
+      name
+      email
+    }
+  }
+}
+`;
+
+export const ATTENDEES = gql`
+  query Attendees {
+    attendees {
+      items {
+        id
+        name
+        email
+        sessions {
+          title
+          startTime
+          endTime
+        }
       }
     }
   }

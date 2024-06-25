@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { NxWelcomeComponent } from './nx-welcome.component';
 import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular/http';
+import { HttpBatchLink } from 'apollo-angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { ApolloClientOptions, InMemoryCache, split } from '@apollo/client/core';
 import { QueriesComponent } from './queries/queries.component';
@@ -22,6 +22,7 @@ import { Kind, OperationTypeNode } from 'graphql';
 import { EventListComponent } from './event-list/event-list.component';
 import { CreateUpdateEventComponent } from './create-update-event/create-update-event.component';
 import { CreateUpdateSessionComponent } from './create-update-session/create-update-session.component';
+import { SessionComponent } from './session/session.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +33,7 @@ import { CreateUpdateSessionComponent } from './create-update-session/create-upd
     CreateUpdateEventComponent,
     EventListComponent,
     CreateUpdateSessionComponent,
+    SessionComponent
   ],
   imports: [
     BrowserModule,
@@ -45,10 +47,11 @@ import { CreateUpdateSessionComponent } from './create-update-session/create-upd
   providers: [
     {
       provide: APOLLO_OPTIONS,
-      useFactory(httpLink: HttpLink): ApolloClientOptions<unknown> {
+      useFactory(httpLink: HttpBatchLink): ApolloClientOptions<unknown> {
         // Create an http link:
         const http = httpLink.create({
           uri: 'http://localhost:4000/graphql',
+          batchMax: 1000,
         });
 
         // Create a WebSocket link:
@@ -88,7 +91,7 @@ import { CreateUpdateSessionComponent } from './create-update-session/create-upd
           // ... Options
         };
       },
-      deps: [HttpLink],
+      deps: [HttpBatchLink],
     },
   ],
 

@@ -13,15 +13,29 @@
       <label for="details" class="form-label">Details</label>
       <textarea class="form-control" formControlName="details" id="details" rows="3"></textarea>
     </div>
-
-    <div class="d-flex gap-2">
-      <button type="submit" class="btn btn-success">
-        <span *ngIf="!isUpdateMode">Create</span>
-        <span *ngIf="isUpdateMode">update</span>
-      </button>
-      <button class="btn btn btn-primary" routerLink="/"><span *ngIf="!isUpdateMode">Cancel</span> <span>Back to
-          events</span> </button>
-    </div>
-
   </form>
+
+  <div class="row">
+    <button type="button" class="btn btn-info" (click)="addSession()">Add Session</button>
+    <div class="col-6 session-card" *ngFor="let session of sessions;index as i">
+      <div class="actions">
+        <button class="btn btn-outline-danger" (click)="deleteSession(i,session.id)">Delete</button>
+        <button type="button" class="btn btn-primary" (click)="startSession(session.id)">Start Session</button>
+      </div>
+      <graphql-angular-create-update-session #session [isComponent]="true" [eventId]="eventId"
+        [session]="session"></graphql-angular-create-update-session>
+    </div>
+    <div class="d-flex gap-2">
+      <!-- <button type="button" class="btn btn-success" (click)="submitSessionForms()">Save</button> -->
+
+      <div class="d-flex my-2 gap-3">
+        <button type="submit" class="btn btn-success" (click)="onSubmit()"><span *ngIf="isUpdateMode">Update</span><span
+            *ngIf="!isUpdateMode">Create</span> </button>
+        <button type="button" class="btn btn btn-primary" routerLink="/">Cancel</button>
+      </div>
+    </div>
+    <!-- <button type="button" class="btn btn-primary mb-3" (click)="addSession()">Add Session</button>
+    <button type="submit" class="btn btn-success" (click)="submitSessionForms()">Save</button> -->
+  </div>
+
 </div>
