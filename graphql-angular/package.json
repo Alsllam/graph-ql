@@ -23,6 +23,7 @@
     "graphql": "^16.9.0",
     "graphql-ws": "^5.16.0",
     "ng-bootstrap": "^1.6.3",
+    "ngx-toastr": "17.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

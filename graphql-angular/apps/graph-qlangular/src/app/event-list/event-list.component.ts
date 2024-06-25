@@ -4,6 +4,7 @@ import { Apollo, QueryRef } from 'apollo-angular';
 import { Subscription } from 'rxjs';
 import { GET_EVENTS, GET_EVENTS_DETAILS, GET_EVENTS_SESSIONS, GET_EVENTS_ATENDEES } from '../gql/events-query';
 import { WatchQueryFetchPolicy } from '@apollo/client';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'graphql-angular-event-list',
   templateUrl: './event-list.component.html',
@@ -31,7 +32,7 @@ export class EventListComponent implements OnInit, OnDestroy {
   eventsQuery: QueryRef<any>;
   skip = 0;
   @ViewChild('myTable') table: any;
-  constructor(private readonly apollo: Apollo, private router: Router) {}
+  constructor(private readonly apollo: Apollo, private router: Router , private toasterService:ToastrService) {}
   ngOnInit(): void {
     this.getData();
   }
@@ -43,8 +44,14 @@ export class EventListComponent implements OnInit, OnDestroy {
         fetchPolicy: this.fetchPolicy
       })
     this.eventsQuery.valueChanges.subscribe((res: any) => {
-      this.rows = res?.data.events.items;
-      this.totalCount = res?.data.events.total;
+      if( Object.keys(res.data).length === 0 && this.fetchPolicy === "cache-only"){
+        this.rows = [];
+        this.toasterService.warning('There is No Data')
+      }else{
+        this.rows = res?.data.events.items;
+        this.totalCount = res?.data.events.total;
+      }
+
     });
   }
   public displayDetails(isChecked:any) {

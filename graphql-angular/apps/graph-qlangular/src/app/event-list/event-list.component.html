@@ -8,45 +8,43 @@
             </div>
             <button class="view-details btn-success btn mt-2" [routerLink]="['/create']">Create New Event</button>
         </div>
-        <ngx-datatable class="material expandable" [rows]="rows" [count]="totalCount" [limit]="10" [footerHeight]="50" #myTable
+        <ngx-datatable class="material expandable" [columnMode]="'flex'" 
+         [rowHeight]="50" [rows]="rows" [count]="totalCount" [limit]="10" [footerHeight]="50" #myTable
         [externalPaging]="true"   (page)="setPage($event)">
-            <ngx-datatable-column [width]="150" [name]="'ID'" prop="id" [resizeable]="false" [sortable]="false" [draggable]="false"
-            [canAutoResize]="false"></ngx-datatable-column>
-            <ngx-datatable-column [width]="200" [name]="'Title'" prop="body" [resizeable]="false" [sortable]="false" [draggable]="false"
-            [canAutoResize]="false"></ngx-datatable-column>
-            <ngx-datatable-column [width]="200" [name]="'Date'" [resizeable]="false" [sortable]="false" [draggable]="false"
-            [canAutoResize]="false">
+            <ngx-datatable-column [flexGrow]="1" [name]="'ID'" [sortable]="false" prop="id" ></ngx-datatable-column>
+            <ngx-datatable-column [flexGrow]="2" [name]="'Title'" [sortable]="false" prop="body" ></ngx-datatable-column>
+            <ngx-datatable-column [flexGrow]="1" [name]="'Date'" [sortable]="false" >
             <ng-template let-row="row" ngx-datatable-cell-template>
                 {{row.date | date}}
             </ng-template>
         </ngx-datatable-column>
-            <ngx-datatable-column *ngIf="haveDetails" [width]="150" [name]="'Details'"
-                prop="details" [resizeable]="false" [sortable]="false" [draggable]="false"
-                [canAutoResize]="false"></ngx-datatable-column>
-            <ngx-datatable-column [width]="150" [resizeable]="false" [sortable]="false" [draggable]="false"
-            [canAutoResize]="false">
+            <ngx-datatable-column *ngIf="haveDetails" [flexGrow]="4" [name]="'Details'" [sortable]="false"
+                prop="details" ></ngx-datatable-column>
+            <!-- <ngx-datatable-column [flexGrow]="1" >
                 <ng-template let-row="row" ngx-datatable-cell-template>
                     <button class="view-details btn btn-info btn-sm" (click)="viewDetails(row?.id)">View Event</button>
                 </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column [width]="150" [resizeable]="false" [sortable]="false" [draggable]="false"
-            [canAutoResize]="false">
+            </ngx-datatable-column> -->
+            <ngx-datatable-column [flexGrow]="2" [sortable]="false">
                 <ng-template let-row="row" ngx-datatable-cell-template>
-                    <button class="view-details btn btn-primary btn-sm" (click)="update(row?.id)">Edit Event</button>
+                    <!-- <button class="view-details btn btn-info btn-sm" (click)="viewDetails(row?.id)">View Event</button> -->
+                    <button class="btn btn-primary mx-1" (click)="update(row?.id)">Edit Event</button>
+                    <button class="btn btn-secondary" (click)="toggleExpandRow(row)" *ngIf="haveAtendees">Show Attendees</button>
+                    <button class="btn btn-secondary" (click)="toggleExpandRow(row)" *ngIf="haveSessions">Show Sessions</button>
                 </ng-template>
             </ngx-datatable-column>
-            <!-- <ngx-datatable-column [width]="150">
+            <!-- <ngx-datatable-column [flexGrow]="1">
                 <ng-template let-row="row" ngx-datatable-cell-template>
                     <button class="view-details btn btn-primary btn-sm" (click)="createSession(row?.id)">Create Session</button>
                 </ng-template>
             </ngx-datatable-column> -->
-            <ngx-datatable-column *ngIf="haveAtendees || haveSessions" [width]="250" [resizeable]="false" [sortable]="false" [draggable]="false"
+            <!-- <ngx-datatable-column *ngIf="haveAtendees || haveSessions" [flexGrow]="1" [resizeable]="false" [sortable]="false" [draggable]="false"
                 [canAutoResize]="false">
                 <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
                     <button class="btn btn-secondary" (click)="toggleExpandRow(row)" *ngIf="haveAtendees">Show Attendees</button>
                     <button class="btn btn-secondary" (click)="toggleExpandRow(row)" *ngIf="haveSessions">Show Sessions</button>
                 </ng-template>
-            </ngx-datatable-column>
+            </ngx-datatable-column> -->
             <!-- Row Detail Template -->
             <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow >
                 <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
@@ -123,9 +121,9 @@
                     <span class="options">
                         <input type="radio" name="network" value="no-cache" [(ngModel)]="noCache" (change)="getSelectedNetwork($event)"> No Cache
                     </span>
-                    <span class="options">
+                    <!-- <span class="options">
                         <input type="radio" name="network" value="standby" [(ngModel)]="standby" (change)="getSelectedNetwork($event)"> Standby
-                    </span>
+                    </span> -->
                 </div>
             </div>
         </div>

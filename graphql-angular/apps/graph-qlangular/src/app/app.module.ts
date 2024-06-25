@@ -25,6 +25,10 @@ import { CreateUpdateSessionComponent } from './create-update-session/create-upd
 import { SessionComponent } from './session/session.component';
 import { createPersistedQueryLink } from 'apollo-angular/persisted-queries';
 import { sha256 } from 'crypto-hash';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,8 +43,10 @@ import { sha256 } from 'crypto-hash';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     HttpClientModule,
+    ToastrModule.forRoot(),
     ApolloModule,
     ReactiveFormsModule,
     NgxDatatableModule,
