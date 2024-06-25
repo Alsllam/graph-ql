@@ -96,9 +96,12 @@ query Session($id: ID!) {
   session(id: $id) {
     id
     title
+    startTime
+    endTime
     event {
       id
       body
+      details
       sessions {
         title
         startTime

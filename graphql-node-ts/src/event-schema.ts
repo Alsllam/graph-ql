@@ -2,7 +2,10 @@ import { createSchema, createPubSub } from 'graphql-yoga'
 import { type Event, type Session, type Attendee } from '@prisma/client'
 import type { GraphQLContext } from './context'
 
-const pubSub = createPubSub()
+const pubSub = createPubSub<{
+  "eventUpdated" : [eventId: string, payload: Event],
+  "attendeeRegistered" : [sessionId: string, payload: Attendee],
+}>()
 
 const typeDefinitions = /* GraphQL */ `
  type EventPagedResult {
@@ -63,8 +66,8 @@ const typeDefinitions = /* GraphQL */ `
   
   type Subscription {
     countdown(from: Int!): Int!
-    attendeeRegistered: Attendee
-    eventUpdated: Event
+    attendeeRegistered(sessionId: String!): Attendee
+    eventUpdated(eventId: String!): Event
   }
 
 `
@@ -224,7 +227,7 @@ const resolvers = {
               id: parseInt(args.id)
             }
           });
-          pubSub.publish('eventUpdated', newEvent)
+          pubSub.publish('eventUpdated', args.id , newEvent)
           return newEvent
       },
       async deleteEvent(parent: unknown, args: {id: string}, context: GraphQLContext){
@@ -233,7 +236,7 @@ const resolvers = {
               id: parseInt(args.id)
             }
           });
-          pubSub.publish('eventUpdated', newEvent)
+          pubSub.publish('eventUpdated', args.id, newEvent)
           return newEvent
       },
       async registerAttendee(parent: unknown, args: {sessionId: string; name: string; email: string}, context: GraphQLContext){
@@ -259,8 +262,8 @@ const resolvers = {
             attendeeId: attendee.id
           }
         })
-        pubSub.publish('attendeeRegistered', attendee)
-        return newAttendee
+        pubSub.publish('attendeeRegistered',args.sessionId, attendee)
+        return attendee
         
       },
 
@@ -294,7 +297,7 @@ const resolvers = {
               id: parseInt(args.id)
             }
           });
-          pubSub.publish('eventUpdated', newEvent)
+          // pubSub.publish('eventUpdated',args.id, newEvent)
           return newEvent
       },
    
@@ -310,11 +313,11 @@ const resolvers = {
         }
       },
       attendeeRegistered: {
-        subscribe: () => pubSub.subscribe('attendeeRegistered'),
+        subscribe: (a: any,args: {sessionId: string}) => pubSub.subscribe('attendeeRegistered',args.sessionId),
         resolve: (payload: any) => payload
       },
       eventUpdated: {
-        subscribe: () => pubSub.subscribe('eventUpdated'),
+        subscribe: (a: any,args: {eventId: string}) => pubSub.subscribe('eventUpdated', args.eventId),
         resolve: (payload: any) => payload
       }
     }
