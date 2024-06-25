@@ -20,7 +20,7 @@
                 {{row.date | date}}
             </ng-template>
         </ngx-datatable-column>
-            <ngx-datatable-column *ngIf="haveDetails" [width]="300" [name]="'Details'"
+            <ngx-datatable-column *ngIf="haveDetails" [width]="150" [name]="'Details'"
                 prop="details" [resizeable]="false" [sortable]="false" [draggable]="false"
                 [canAutoResize]="false"></ngx-datatable-column>
             <ngx-datatable-column [width]="150" [resizeable]="false" [sortable]="false" [draggable]="false"
@@ -132,7 +132,7 @@
         <div class="my-2">
             <span class="mx-2"><strong>Update options</strong></span>
             <div class="mt-2 update-options">
-                <button class="btn btn-warning"  (click)="Polling()">{{isPolling?'Cancel Update': 'Update Every 0.5s'}} </button>
+                <button class="btn btn-warning"  (click)="Polling()">{{isPolling?'Cancel Update': 'Update Every 1s'}} </button>
                 <button class="btn btn-info" (click)="refresh()">Update Now</button>
             </div>
         </div>
