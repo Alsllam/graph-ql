@@ -1,5 +1,5 @@
 <div class="card p-5 m-5 w-50 mx-auto border-0 shadow-sm bg-light">
-  <p><strong *ngIf="!isUpdateMode">Create Event.</strong></p>
+  <p><strong *ngIf="!isUpdateMode">Create Event.</strong><strong *ngIf="isUpdateMode">Update Event.</strong></p>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
@@ -7,7 +7,7 @@
     </div>
     <div class="mb-3">
       <label for="date" class="form-label">Date</label>
-      <input type="date" class="form-control" formControlName="date" id="date">
+      <input type="datetime-local" class="form-control" formControlName="date" id="date">
     </div>
     <div class="mb-3">
       <label for="details" class="form-label">Details</label>

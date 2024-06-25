@@ -76,12 +76,39 @@ export const UPDATE_SESSION = gql`
   }
 `;
 
+export const SESSION_SUBSCRIBE = gql`
+  subscription OnEventUpdated($eventId: String!) {
+    eventUpdated(eventId: $eventId) {
+      body
+      details
+    }
+  }
+`;
+export const ATTENDEES_SUBSCRIBE = gql`
+  subscription OnAttendeeRegistered($sessionId: String!) {
+    attendeeRegistered(sessionId: $sessionId) {
+      name
+      email
+    }
+  }
+`;
+
 export const DELETE_SESSION = gql`
   mutation DeleteSession($id: ID!) {
     deleteSession(id: $id) {
       title
       startTime
       endTime
+    }
+  }
+`;
+
+export const REGISTER_ATTENDEE = gql`
+  mutation RegisterAttendee($sessionId: ID!, $name: String!, $email: String!) {
+    registerAttendee(sessionId: $sessionId, name: $name, email: $email) {
+      id
+      name
+      email
     }
   }
 `;

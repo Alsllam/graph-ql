@@ -74,9 +74,7 @@ export class CreateUpdateEventComponent implements OnInit {
           const date = new Date(+event.date);
           this.form.patchValue({
             name: event.body,
-            date: `${date.getFullYear()}-${transform(
-              date.getMonth()
-            )}-${transform(date.getDate())}`,
+            date: `${date.getFullYear()}-${transform(date.getMonth())}-${transform(date.getDate())}T${transform(date.getHours())}:${transform(date.getMinutes())}`,
             details: event.details,
           });
         }

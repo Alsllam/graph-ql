@@ -67,7 +67,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         // Create a WebSocket link:
         const ws = new GraphQLWsLink(
           createClient({
-            url: 'ws://localhost:4000/graphql',
+            url: 'ws://localhost:5000/graphql',
           })
         );
 
