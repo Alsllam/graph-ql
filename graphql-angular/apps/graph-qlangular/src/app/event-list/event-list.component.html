@@ -107,22 +107,22 @@
                 <span class="mx-2"><strong>Network options</strong></span>
                 <div class="graph-options">
                     <span class="options">
-                        <input type="radio" name="network" value="cache-first" [(ngModel)]="cacheFirst" (change)="getSelectedNetwork($event)"> Cache First
+                        <input type="radio" name="network" value="cache-first"  (change)="getSelectedNetwork($event)" checked> Cache First
                     </span>
                     <span class="options">
-                        <input type="radio" name="network" value="cache-only" [(ngModel)]="cacheOnly" (change)="getSelectedNetwork($event)"> Cache Only
+                        <input type="radio" name="network" value="cache-only"  (change)="getSelectedNetwork($event)"> Cache Only
                     </span>
                     <span class="options">
-                        <input type="radio" name="network" value="cache-and-network" [(ngModel)]="cacheAndNetwork" (change)="getSelectedNetwork($event)"> Cache And Network
+                        <input type="radio" name="network" value="cache-and-network" (change)="getSelectedNetwork($event)"> Cache And Network
                     </span>
                     <span class="options">
-                        <input type="radio" name="network" value="network-only" [(ngModel)]="networkOnly" (change)="getSelectedNetwork($event)"> Network Only
+                        <input type="radio" name="network" value="network-only" (change)="getSelectedNetwork($event)"> Network Only
                     </span>
                     <span class="options">
-                        <input type="radio" name="network" value="no-cache" [(ngModel)]="noCache" (change)="getSelectedNetwork($event)"> No Cache
+                        <input type="radio" name="network" value="no-cache"  (change)="getSelectedNetwork($event)"> No Cache
                     </span>
                     <!-- <span class="options">
-                        <input type="radio" name="network" value="standby" [(ngModel)]="standby" (change)="getSelectedNetwork($event)"> Standby
+                        <input type="radio" name="network" value="standby" (change)="getSelectedNetwork($event)"> Standby
                     </span> -->
                 </div>
             </div>
@@ -132,7 +132,7 @@
                 <span class="mx-2"><strong>Request options</strong></span>
                 <div class="graph-options">
                     <span class="options">
-                        <input type="radio" name="request" value="default" (change)="getRequestOptions($event)"> Default
+                        <input type="radio" name="request" value="default" (change)="getRequestOptions($event)" checked> Default
                     </span>
                     <span class="options">
                         <input type="radio" name="request" value="hashing" (change)="getRequestOptions($event)"> Hashing

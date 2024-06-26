@@ -21,14 +21,8 @@ export class EventListComponent implements OnInit, OnDestroy {
   haveDetails: boolean;
   haveSessions: boolean;
   haveAtendees: boolean;
-  cacheFirst:string;
-  cacheOnly:string;
-  cacheAndNetwork:string;
   filterText:string;
-  networkOnly:string;
-  noCache:string;
-  standby:string;
-  fetchPolicy:WatchQueryFetchPolicy = 'no-cache';
+  fetchPolicy:WatchQueryFetchPolicy;
   isPolling = false;
   eventsQuery: QueryRef<any>;
   skip = 0;
