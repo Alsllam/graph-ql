@@ -17,6 +17,7 @@ const typeDefinitions = /* GraphQL */ `
     body: String!
     date: String!
     details: String
+    importance: Int
     sessions: [Session]
     attendees: [Attendee]
   }
@@ -62,6 +63,8 @@ const typeDefinitions = /* GraphQL */ `
     createSession(eventId: ID!, title: String!, startTime: String!, endTime: String!): Session
     updateSession(id: ID!, title: String, startTime: String, endTime: String): Session
     deleteSession(id: ID!): Session
+
+    addEventImportance(eventId: ID!, importanceId: Int!): Int
   }
   
   type Subscription {
@@ -145,6 +148,7 @@ const resolvers = {
       body: (parent: Event) => parent.body,
       date: (parent: Event) => parent.date,
       details: (parent: Event) => parent.details,
+      importance: (parent: Event) => parent.importance,
       sessions(parent: Event, args: {}, context: GraphQLContext) {
         return context.prisma.session.findMany({
           where: {
@@ -212,6 +216,7 @@ const resolvers = {
               body: args.name,
               date: new Date(),
               details: args.details,
+              importance: 0
             }
           })
           return newEvent
@@ -299,6 +304,24 @@ const resolvers = {
           });
           // pubSub.publish('eventUpdated',args.id, newEvent)
           return newEvent
+      },
+
+      async addEventImportance(parent: unknown, args: {eventId: string; importanceId: number;}, context: GraphQLContext){
+        if(args.importanceId < 0 || args.importanceId > 2){
+          args.importanceId = 0;
+        }
+        if(+args.eventId % 2 === 0) {
+          throw new Error ("Cannot Do That Actions");
+        }
+        const newEvent = await context.prisma.event.update({
+            data: {
+              importance: args.importanceId,
+            },
+            where: {
+              id: parseInt(args.eventId)
+            }
+          });
+          return newEvent.importance
       },
    
     },

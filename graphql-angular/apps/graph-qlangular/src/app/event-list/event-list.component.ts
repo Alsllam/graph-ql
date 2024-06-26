@@ -28,7 +28,7 @@ export class EventListComponent implements OnInit, OnDestroy {
   networkOnly:string;
   noCache:string;
   standby:string;
-  fetchPolicy:WatchQueryFetchPolicy = 'cache-first';
+  fetchPolicy:WatchQueryFetchPolicy = 'no-cache';
   isPolling = false;
   eventsQuery: QueryRef<any>;
   skip = 0;
@@ -97,11 +97,7 @@ export class EventListComponent implements OnInit, OnDestroy {
   }
   public next(){
     this.skip = this.skip +10;
-    this.eventsQuery.setVariables({
-      skip: this.skip,
-      filterNeedle:'',
-      take:10
-    })
+    this.eventsQuery.setVariables({filterNeedle:'', skip: this.skip, take:10})
     // this.eventsQuery.fetchMore({
     //   variables:{
     //     skip:this.skip
@@ -169,12 +165,7 @@ export class EventListComponent implements OnInit, OnDestroy {
     this.haveAtendees = false;
     this.haveSessions = false;
     this.haveDetails = false;
-    this.eventsQuery.setVariables({
-      skip: pageInfo.offset * pageInfo.limit,
-      filterNeedle:'',
-      take: pageInfo.limit
-    })
-
+    this.eventsQuery.setVariables({filterNeedle:'', skip: pageInfo.offset * pageInfo.limit, take: pageInfo.limit})
   }
   getSelectedNetwork(event:any){
     this.fetchPolicy = event.target.value;
