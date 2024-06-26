@@ -29,6 +29,7 @@ model Event {
   body      String
   date      DateTime
   details    String?
+  importance    Int?
   sessions    Session[]
 }
 
