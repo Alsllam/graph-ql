@@ -8,11 +8,7 @@ import { APOLLO_NAMED_OPTIONS, APOLLO_OPTIONS, ApolloModule, NamedOptions } from
 import { HttpBatchLink, HttpLink } from 'apollo-angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { ApolloClientOptions, InMemoryCache, split } from '@apollo/client/core';
-import { QueriesComponent } from './queries/queries.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { FeedDetailsComponent } from './feed-details/feed-details.component';
-import { CreateUpdateFeedComponent } from './create-update-feed/create-update-feed.component';
-import { AddCommentComponent } from './add-comment/add-comment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getMainDefinition, offsetLimitPagination } from '@apollo/client/utilities';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
@@ -34,9 +30,6 @@ import { SSELink } from './sse-link';
   declarations: [
     AppComponent,
     NxWelcomeComponent,
-    QueriesComponent,
-    CreateUpdateFeedComponent,
-    AddCommentComponent,
     CreateUpdateEventComponent,
     EventListComponent,
     CreateUpdateSessionComponent,
