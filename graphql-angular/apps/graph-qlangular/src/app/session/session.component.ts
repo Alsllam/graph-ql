@@ -122,7 +122,7 @@ export class SessionComponent implements OnInit {
   }
 
   getAttendeeState() {
-    return this.apollo
+    return this.apollo.use('sseLink')
       .subscribe({
         query: ATTENDEES_SUBSCRIBE,
         variables: {
