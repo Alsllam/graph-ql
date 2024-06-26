@@ -310,6 +310,9 @@ const resolvers = {
         if(args.importanceId < 0 || args.importanceId > 2){
           args.importanceId = 0;
         }
+        if(+args.eventId % 2 === 0) {
+          throw new Error ("Cannot Do That Actions");
+        }
         const newEvent = await context.prisma.event.update({
             data: {
               importance: args.importanceId,

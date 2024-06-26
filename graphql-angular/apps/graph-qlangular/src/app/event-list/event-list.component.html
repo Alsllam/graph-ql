@@ -56,11 +56,11 @@
                                 <span>{{session.title}}</span>
                             </div>
                             <div class="d-flex flex-column">
-                                <span><strong>Start Time</strong></span>
+                                <span><strong>Start</strong></span>
                                 <span>{{session.startTime| date}}</span>
                             </div>
                             <div class="d-flex flex-column">
-                                <span><strong>End Time</strong></span>
+                                <span><strong>End</strong></span>
                                 <span>{{session.endTime| date}}</span>
                             </div>
                         </div>
@@ -124,6 +124,19 @@
                     <!-- <span class="options">
                         <input type="radio" name="network" value="standby" [(ngModel)]="standby" (change)="getSelectedNetwork($event)"> Standby
                     </span> -->
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-column">
+            <div class="my-3">
+                <span class="mx-2"><strong>Request options</strong></span>
+                <div class="graph-options">
+                    <span class="options">
+                        <input type="radio" name="request" value="default" (change)="getRequestOptions($event)"> Default
+                    </span>
+                    <span class="options">
+                        <input type="radio" name="request" value="hashing" (change)="getRequestOptions($event)"> Hashing
+                    </span>
                 </div>
             </div>
         </div>

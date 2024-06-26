@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EventListComponent implements OnInit, OnDestroy {
   sub$: Subscription;
+  getSub$: Subscription;
   rows: any;
   totalCount = 0;
   events: any;
@@ -37,13 +38,14 @@ export class EventListComponent implements OnInit, OnDestroy {
     this.getData();
   }
   public getData() {
+    this.getSub$?.unsubscribe();
     this.eventsQuery = this.apollo
       .watchQuery<any>({
         query: GET_EVENTS,
         variables:{filterNeedle:'', skip:this.skip, take:10},
         fetchPolicy: this.fetchPolicy
       })
-    this.eventsQuery.valueChanges.subscribe((res: any) => {
+    this.getSub$ = this.eventsQuery.valueChanges.subscribe((res: any) => {
       if( Object.keys(res.data).length === 0 && this.fetchPolicy === "cache-only"){
         this.rows = [];
         this.toasterService.warning('There is No Data')
@@ -157,6 +159,7 @@ export class EventListComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.sub$?.unsubscribe();
+    this.getSub$?.unsubscribe();
   }
   setPage(pageInfo: any) {
     this.haveAtendees = false;
@@ -167,6 +170,33 @@ export class EventListComponent implements OnInit, OnDestroy {
   getSelectedNetwork(event:any){
     this.fetchPolicy = event.target.value;
     this.getData()
+  }
+  getRequestOptions(event:any){
+    const REQUEST_OPTIONS = event.target.value;
+    if(REQUEST_OPTIONS === 'default'){
+      this.getData()
+    }else{
+      this.getDataWithHashing();
+    }
+  }
+  private getDataWithHashing(){
+    this.getSub$?.unsubscribe();
+    this.eventsQuery = this.apollo.use('newClientName')
+    .watchQuery<any>({
+      query: GET_EVENTS,
+      variables:{filterNeedle:'', skip:this.skip, take:10},
+      fetchPolicy: this.fetchPolicy
+    })
+    this.getSub$ =  this.eventsQuery.valueChanges.subscribe((res: any) => {
+    if( Object.keys(res.data).length === 0 && this.fetchPolicy === "cache-only"){
+      this.rows = [];
+      this.toasterService.warning('There is No Data')
+    }else{
+      this.rows = res?.data.events.items;
+      this.totalCount = res?.data.events.total;
+    }
+
+  });
   }
   search(){
     this.eventsQuery.setVariables({
