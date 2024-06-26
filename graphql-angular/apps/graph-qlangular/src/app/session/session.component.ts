@@ -53,6 +53,7 @@ export class SessionComponent implements OnInit {
       sDate: [],
       eDate: [],
     });
+    this.form.disable()
   }
 
   initAttendanceForm() {
