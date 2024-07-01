@@ -1,3 +1,4 @@
+
 <div class="card p-5 m-5 w-50 mx-auto border-0 shadow-sm bg-light">
   <p><strong *ngIf="!isUpdateMode">Create Event.</strong><strong *ngIf="isUpdateMode">Update Event.</strong></p>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -39,3 +40,4 @@
   </div>
 
 </div>
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>

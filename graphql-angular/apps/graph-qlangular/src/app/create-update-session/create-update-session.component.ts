@@ -28,7 +28,6 @@ export class CreateUpdateSessionComponent implements OnInit {
   constructor(
     private apollo: Apollo,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router
   ) {}
 
@@ -61,9 +60,9 @@ export class CreateUpdateSessionComponent implements OnInit {
 
   initForm() {
     this.form = this.formBuilder.group({
-      title: [],
-      sDate: [],
-      eDate: [],
+      title: [''],
+      sDate: [''],
+      eDate: [''],
     });
   }
 

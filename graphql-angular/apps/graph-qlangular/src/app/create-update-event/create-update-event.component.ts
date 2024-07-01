@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EVENT_BY_ID } from '../gql/events-query';
 import { CreateUpdateSessionComponent } from '../create-update-session/create-update-session.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const transform = (value: number, digits: number = 2): string => {
   let paddedNumber = value.toString();
@@ -35,7 +36,8 @@ export class CreateUpdateEventComponent implements OnInit {
     private apollo: Apollo,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -69,7 +71,6 @@ export class CreateUpdateEventComponent implements OnInit {
       .valueChanges.subscribe((data: any) => {
         if (data.data) {
           this.sessions = [...data.data?.event?.sessions];
-          console.log(this.sessions);
           const event = data?.data.event;
           const date = new Date(+event.date);
           this.form.patchValue({
@@ -102,6 +103,7 @@ export class CreateUpdateEventComponent implements OnInit {
   }
 
   onSubmit() {
+    this.spinner.show();
     if (this.isUpdateMode) {
       this.apollo
         .mutate<{ updateFeed: any }>({
@@ -114,11 +116,17 @@ export class CreateUpdateEventComponent implements OnInit {
           },
           errorPolicy: 'all',
         })
-        .subscribe(({ data, errors }) => {
-          this.router.navigate(['/']);
-          if (errors) {
-            console.log(errors[0].originalError?.message);
+        .subscribe((data) => {
+          if (!data.loading) {
+            setTimeout(() => {
+              this.spinner.hide();
+              this.router.navigate(['/']);
+            }, 1000);
           }
+          console.log({
+            loading: data.loading,
+            data: data.data,
+          });
         });
       this.submitSessionForms();
     } else {
