@@ -28,6 +28,8 @@ import { sha256 } from 'crypto-hash';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SSELink } from './sse-link';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import extractFiles from 'extract-files/extractFiles.mjs';
 
 
 @NgModule({
@@ -51,6 +53,7 @@ import { SSELink } from './sse-link';
     ApolloModule,
     ReactiveFormsModule,
     NgxDatatableModule,
+    NgxSpinnerModule,
     FormsModule
   ],
   providers: [
@@ -87,7 +90,7 @@ import { SSELink } from './sse-link';
     //       // persistedHttp
     //       http
     //     );
-        
+
     //     return {
     //       link,
     //       cache: new InMemoryCache({
@@ -112,6 +115,7 @@ import { SSELink } from './sse-link';
         const http = httpLink.create({
           uri: 'http://localhost:4000/graphql',
           batchMax: 1000,
+          extractFiles: extractFiles as any,
         });
         // hashing query
         const persistedHttp = createPersistedQueryLink({sha256}).concat(http);
@@ -170,7 +174,7 @@ import { SSELink } from './sse-link';
             link:seeLinkConcat
           },
         };
-        
+
       },
       deps: [HttpBatchLink],
     }

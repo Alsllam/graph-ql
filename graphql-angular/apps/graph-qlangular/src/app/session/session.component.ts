@@ -1,5 +1,5 @@
 import { ATTENDEES, SESSION } from './../gql/events-query';
-import { Apollo } from 'apollo-angular';
+import { Apollo, QueryRef } from 'apollo-angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 //import { Attendees } from '../session';
@@ -30,6 +30,8 @@ export class SessionComponent implements OnInit {
   attendees: any[];
   sessionId: number | string | null;
   attendanceFormValues: { name: ''; email: '' };
+  query: QueryRef<any>
+
   constructor(
     private apollo: Apollo,
     private formBuilder: FormBuilder,
@@ -38,11 +40,13 @@ export class SessionComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+
     // this.getAttendeeList()
     this.route.paramMap.subscribe((params) => {
       this.sessionId = params.get('id');
       this.getSectionDetails(Number(this.sessionId));
     });
+
   }
 
   initForm() {
@@ -64,16 +68,16 @@ export class SessionComponent implements OnInit {
   }
 
   getSectionDetails(id: number) {
-    return this.apollo
+    (this.query as any) = this.apollo
       .watchQuery({
         query: SESSION,
         variables: {
           id: id,
         },
       })
-      .valueChanges.subscribe((data: any) => {
-        console.log('SESSION', data.data.session);
-        const session = data?.data?.session;
+      this.query.valueChanges.subscribe(({ data }) => {
+        console.log('SESSION', data.session);
+        const session = data.session;
         const startDate = new Date(+session.startTime);
         const endDate = new Date(+session.endTime);
         this.attendees = session.attendees;
@@ -86,10 +90,28 @@ export class SessionComponent implements OnInit {
           sDate: `${startDate.getFullYear()}-${transform(startDate.getMonth())}-${transform(startDate.getDate())}T${transform(startDate.getHours())}:${transform(startDate.getMinutes())}`,
           eDate: `${endDate.getFullYear()}-${transform(endDate.getMonth())}-${transform(endDate.getDate())}T${transform(endDate.getHours())}:${transform(endDate.getMinutes())}`,
         });
-        this.getEventState(session.event?.id);
+        // this.getEventState(session.event?.id);
+        this.sub(session.event?.id);
+
       });
   }
 
+  sub(id:any){
+    this.query?.subscribeToMore({
+      document: SESSION_SUBSCRIBE,
+      variables: {
+        eventId:id
+      },
+      updateQuery: (prev, {subscriptionData})=>{
+        console.log('subscriptionData',subscriptionData.data.eventUpdated);
+        this.form.patchValue({
+          eventBody: subscriptionData.data.eventUpdated.body,
+          eventDetails: subscriptionData.data.eventUpdated.details,
+        });
+
+      }
+    })
+  }
   onRegisterAtt(name: string, email: string) {
     return this.apollo
       .mutate({
@@ -133,7 +155,7 @@ export class SessionComponent implements OnInit {
       .subscribe((data: any) => {
         const newAttendee = data.data.attendeeRegistered;
         this.attendees = [...this.attendees, newAttendee];
-        console.log(newAttendee);
+        console.log('newAttendee',newAttendee);
       });
   }
 
