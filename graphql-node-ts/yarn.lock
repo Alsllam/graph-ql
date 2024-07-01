@@ -53,7 +53,7 @@
     tslib "^2.4.0"
     value-or-promise "^1.0.12"
 
-"@graphql-tools/utils@^10.0.13", "@graphql-tools/utils@^10.1.0", "@graphql-tools/utils@^10.1.1", "@graphql-tools/utils@^10.2.1":
+"@graphql-tools/utils@^10.0.0", "@graphql-tools/utils@^10.0.13", "@graphql-tools/utils@^10.1.0", "@graphql-tools/utils@^10.1.1", "@graphql-tools/utils@^10.2.1":
   version "10.2.1"
   resolved "https://registry.npmjs.org/@graphql-tools/utils/-/utils-10.2.1.tgz"
   integrity sha512-U8OMdkkEt3Vp3uYHU2pMc6mwId7axVAcSSmcqJcUmWNPqY2pfee5O655ybTI2kNPWAe58Zu6gLu4Oi4QT4BgWA==
@@ -63,7 +63,7 @@
     dset "^3.1.2"
     tslib "^2.4.0"
 
-"@graphql-typed-document-node/core@3.2.0", "@graphql-typed-document-node/core@^3.1.1":
+"@graphql-typed-document-node/core@^3.1.1", "@graphql-typed-document-node/core@3.2.0":
   version "3.2.0"
   resolved "https://registry.npmjs.org/@graphql-typed-document-node/core/-/core-3.2.0.tgz"
   integrity sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==
@@ -76,14 +76,14 @@
     tslib "^2.5.2"
 
 "@graphql-yoga/plugin-apq@^3.3.1":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@graphql-yoga/plugin-apq/-/plugin-apq-3.4.0.tgz#95d72e32ca92e930c815e52730c2db90b19b170d"
-  integrity sha512-GywEYCVb67DY3zWE8X9mkQ1wDUD2h/eMgesDRfccUH3VN12dTkVV8z2+Oyxtb4DoKHi1inwdbW6gdm6rttLyQg==
+  version "3.5.0"
+  resolved "https://registry.npmjs.org/@graphql-yoga/plugin-apq/-/plugin-apq-3.5.0.tgz"
+  integrity sha512-YSbZBxggLge/i01akOGd4r1XJ8hSE0vHpnh66tp6mk5kJqkh7Mi11TZAkyTOH8KlQqcrZV+FI4cUaD0edtWPqg==
 
-"@graphql-yoga/subscription@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.npmjs.org/@graphql-yoga/subscription/-/subscription-5.0.0.tgz"
-  integrity sha512-Ri7sK8hmxd/kwaEa0YT8uqQUb2wOLsmBMxI90QDyf96lzOMJRgBuNYoEkU1pSgsgmW2glceZ96sRYfaXqwVxUw==
+"@graphql-yoga/subscription@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.npmjs.org/@graphql-yoga/subscription/-/subscription-5.0.1.tgz"
+  integrity sha512-1wCB1DfAnaLzS+IdoOzELGGnx1ODEg9nzQXFh4u2j02vAnne6d+v4A7HIH9EqzVdPLoAaMKXCZUUdKs+j3z1fg==
   dependencies:
     "@graphql-yoga/typed-event-target" "^3.0.0"
     "@repeaterjs/repeater" "^3.0.4"
@@ -390,11 +390,6 @@ fs.realpath@^1.0.0:
   resolved "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
 
-fsevents@~2.3.2:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
-  integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
-
 function-bind@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz"
@@ -424,24 +419,24 @@ graphql-ws@^5.16.0:
   resolved "https://registry.npmjs.org/graphql-ws/-/graphql-ws-5.16.0.tgz"
   integrity sha512-Ju2RCU2dQMgSKtArPbEtsK5gNLnsQyTNIo/T7cZNp96niC1x0KdJNZV0TIoilceBPQwfb5itrGl8pkFeOUMl4A==
 
-graphql-yoga@5.x.x:
-  version "5.3.1"
-  resolved "https://registry.npmjs.org/graphql-yoga/-/graphql-yoga-5.3.1.tgz"
-  integrity sha512-n918QV6TF7xTjb9ASnozgsr4ydMc08c+x4eRAWKxxWVwSnzdP2xeN2zw1ljIzRD0ccSCNoBajGDKwcZkJDitPA==
+graphql-yoga@^5.5.0, graphql-yoga@5.x.x:
+  version "5.5.0"
+  resolved "https://registry.npmjs.org/graphql-yoga/-/graphql-yoga-5.5.0.tgz"
+  integrity sha512-GrF1GfR5RJb/iHEcRQakXSSoqXb2dgGa0UCU0CXsfYnuUstSog6nF5oCUKlXz1UnFbpNAlVhU++rd088S4VAtg==
   dependencies:
     "@envelop/core" "^5.0.0"
     "@graphql-tools/executor" "^1.2.5"
     "@graphql-tools/schema" "^10.0.0"
     "@graphql-tools/utils" "^10.1.0"
     "@graphql-yoga/logger" "^2.0.0"
-    "@graphql-yoga/subscription" "^5.0.0"
+    "@graphql-yoga/subscription" "^5.0.1"
     "@whatwg-node/fetch" "^0.9.17"
     "@whatwg-node/server" "^0.9.33"
     dset "^3.1.1"
     lru-cache "^10.0.0"
     tslib "^2.5.2"
 
-graphql@16.6.0:
+"graphql@^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "graphql@^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "graphql@^15.2.0 || ^16.0.0", "graphql@>=0.11 <=16", graphql@16.6.0:
   version "16.6.0"
   resolved "https://registry.npmjs.org/graphql/-/graphql-16.6.0.tgz"
   integrity sha512-KPIBPDlW7NxrbT/eh4qPXz5FiFdL5UbaA0XUNz2Rp3Z3hqBSkbj0GVjwFDztsWVauZUWsbKHgMg++sk8UX0bkw==
@@ -561,7 +556,7 @@ picomatch@^2.0.4, picomatch@^2.2.1:
   resolved "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz"
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
 
-prisma@5.15.0:
+prisma@*, prisma@5.15.0:
   version "5.15.0"
   resolved "https://registry.npmjs.org/prisma/-/prisma-5.15.0.tgz"
   integrity sha512-JA81ACQSCi3a7NUOgonOIkdx8PAVkO+HbUOxmd00Yb8DgIIEpr2V9+Qe/j6MLxIgWtE/OtVQ54rVjfYRbZsCfw==
@@ -664,7 +659,7 @@ ts-node-dev@2.0.0:
     ts-node "^10.4.0"
     tsconfig "^7.0.0"
 
-ts-node@10.9.1, ts-node@^10.4.0:
+ts-node@^10.4.0, ts-node@10.9.1:
   version "10.9.1"
   resolved "https://registry.npmjs.org/ts-node/-/ts-node-10.9.1.tgz"
   integrity sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==
@@ -698,7 +693,7 @@ tslib@^2.3.1, tslib@^2.4.0, tslib@^2.5.0, tslib@^2.5.2:
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.6.3.tgz"
   integrity sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==
 
-typescript@5.1.6:
+typescript@*, typescript@>=2.7, typescript@5.1.6:
   version "5.1.6"
   resolved "https://registry.npmjs.org/typescript/-/typescript-5.1.6.tgz"
   integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
