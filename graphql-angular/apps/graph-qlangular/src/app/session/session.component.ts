@@ -91,12 +91,12 @@ export class SessionComponent implements OnInit {
           eDate: `${endDate.getFullYear()}-${transform(endDate.getMonth())}-${transform(endDate.getDate())}T${transform(endDate.getHours())}:${transform(endDate.getMinutes())}`,
         });
         // this.getEventState(session.event?.id);
-        this.sub(session.event?.id);
+        this.subscribeToMore(session.event?.id);
 
       });
   }
 
-  sub(id:any){
+  subscribeToMore(id:any){
     this.query?.subscribeToMore({
       document: SESSION_SUBSCRIBE,
       variables: {
