@@ -112,3 +112,18 @@ export const REGISTER_ATTENDEE = gql`
     }
   }
 `;
+export const EVENT_IMPORTANCE = gql`
+  mutation AddEventImportance($eventId: ID!, $importanceId: Int!) {
+    addEventImportance(eventId: $eventId, importanceId: $importanceId){
+      id
+      body
+      date
+      importance
+    }
+  }
+`;
+export const UPLOAD_FILE = gql`
+  mutation uploadFile($file: File!) {
+    uploadFile(file: $file)
+  }
+`;

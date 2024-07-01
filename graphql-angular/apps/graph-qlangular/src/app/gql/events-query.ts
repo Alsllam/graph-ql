@@ -8,6 +8,7 @@ export const GET_EVENTS = gql`
             id
             body
             date
+            importance
         }
   }
 }
@@ -21,6 +22,7 @@ export const GET_EVENTS_DETAILS = gql`
             id
             body
             date
+            importance
             details
         }
   }
@@ -34,6 +36,7 @@ query getEventSessions($filterNeedle: String!, $skip: Int!, $take: Int!){
             id
             body
             date
+            importance
             details
             sessions{
                 id
