@@ -1,4 +1,7 @@
-<h3 class="w-100 d-flex justify-content-center my-3">View Events List</h3>
+<!-- <h3 class="w-100 d-flex justify-content-center my-3">View Events List</h3>
+<input type="file" (change)="onFileSelected($event)" />
+<button (click)="upload()">Upload File</button> -->
+
 <div class="layout">
     <div class="card col-10 mx-3">
         <div class="d-flex justify-content-between w-100 mb-3">
@@ -8,12 +11,24 @@
             </div>
             <button class="view-details btn-success btn mt-2" [routerLink]="['/create']">Create New Event</button>
         </div>
-        <ngx-datatable class="material expandable" [columnMode]="'flex'" 
+        <ngx-datatable class="material expandable" [columnMode]="'flex'"
          [rowHeight]="50" [rows]="rows" [count]="totalCount" [limit]="10" [footerHeight]="50" #myTable
         [externalPaging]="true"   (page)="setPage($event)">
             <ngx-datatable-column [flexGrow]="1" [name]="'ID'" [sortable]="false" prop="id" ></ngx-datatable-column>
             <ngx-datatable-column [flexGrow]="2" [name]="'Title'" [sortable]="false" prop="body" ></ngx-datatable-column>
             <ngx-datatable-column [flexGrow]="1" [name]="'Date'" [sortable]="false" >
+            <ngx-datatable-column name="Priority" [width]="250" [resizeable]="false" [sortable]="false" [draggable]="false"
+              [canAutoResize]="false">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <select class="form-select" #options (change)="onSelected(options.value, row)" [value]="row.importance" aria-label="Default select example">
+                  <option selected value="null">Open this select menu</option>
+                  <option value="0">Urgent</option>
+                  <option value="1">Important</option>
+                  <option value="2">Normal</option>
+                </select>
+              </ng-template>
+            </ngx-datatable-column>
+
             <ng-template let-row="row" ngx-datatable-cell-template>
                 {{row.date | date}}
             </ng-template>
@@ -153,3 +168,13 @@
         <button class="btn btn-success" (click)="next()">Next</button>
     </div> -->
 </div>
+
+
+
+
+<!-- simple ex. for local state -->
+  <!-- <div [class]="theme === 'dark' ? 'bg-dark' : 'bg-secondary'">
+    <p>The current theme is: {{ theme }}</p>
+    <button (click)="toggleTheme()">Toggle Theme</button>
+  </div> -->
+
