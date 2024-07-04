@@ -8,7 +8,7 @@ import {
 } from '../gql/events-mutations';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EVENT_BY_ID } from '../gql/events-query';
+import { EVENT_BY_ID, GET_EVENTS } from '../gql/events-query';
 import { CreateUpdateSessionComponent } from '../create-update-session/create-update-session.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -115,6 +115,18 @@ export class CreateUpdateEventComponent implements OnInit {
             details: this.form.controls['details'].value,
           },
           errorPolicy: 'all',
+          update: (cache, { data }) => {
+            if (data && data.updateFeed) {
+              const existingEvents: any = cache.readQuery({ query: GET_EVENTS });
+              const updatedEvents = existingEvents.events.map((event: any) =>
+                event.id === this.eventId ? data.updateFeed : event
+              );
+              cache.writeQuery({
+                query: GET_EVENTS,
+                data: { events: updatedEvents },
+              });
+            }
+          },
         })
         .subscribe((data) => {
           if (!data.loading) {
@@ -157,6 +169,11 @@ export class CreateUpdateEventComponent implements OnInit {
         mutation: DELETE_SESSION,
         variables: {
           id: sessionId,
+        },
+        update: (cache) => {
+          const normalizedId = cache.identify({ id: sessionId, __typename: 'Session' });
+          cache.evict({ id: normalizedId });
+          cache.gc(); // Garbage collect unused items in the cache
         },
       })
       .subscribe((data) => console.log(data));

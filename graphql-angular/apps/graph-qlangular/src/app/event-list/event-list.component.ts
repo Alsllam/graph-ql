@@ -151,11 +151,12 @@ export class EventListComponent implements OnInit, OnDestroy {
       skip: this.skip,
       take: 10,
     });
-    // this.eventsQuery.fetchMore({
-    //   variables:{
-    //     skip:this.skip
-    //   }
-    // })
+    this.eventsQuery.fetchMore({
+      variables:{
+        skip:this.skip,
+        take: 10
+      }
+    })
   }
   public previous() {
     this.eventsQuery.fetchMore({
